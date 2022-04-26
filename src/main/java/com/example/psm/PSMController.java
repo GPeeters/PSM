@@ -1,7 +1,5 @@
 package com.example.psm;
 
-import com.example.psm.PageStrategySimulator.Instructie;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -20,6 +18,7 @@ public class PSMController implements Initializable {
     @FXML
     private Label l1, l2, timerText, timer, instruct, pid, prevAdd, nextAdd;
 
+    @FXML
     public void setLabelsInit(ArrayList<Instructie> active) {
         l1.setText("File Selected: Instructions_30_3.xml");
         l2.setText(" ");

@@ -1,6 +1,5 @@
 package com.example.psm;
 
-import com.example.psm.PageStrategySimulator.Instructie;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -9,9 +8,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static com.example.psm.PageStrategySimulator.ReadXML;
-import static com.example.psm.PageStrategySimulator.Proces;
-import static com.example.psm.PageStrategySimulator.Proces.deallocate;
+import static com.example.psm.ReadXML.ReadXML;
+
 
 public class PSMApplication extends Application {
     private static final String FILENAME1 = "Instructions_30_3.xml";
@@ -24,6 +22,8 @@ public class PSMApplication extends Application {
     static ArrayList<Instructie> pro_20000_20;
 
     static ArrayList<Proces> procList = new ArrayList<>(4);
+
+    static HardDrive hd = new HardDrive();
 
     static int i;
     static int time;
@@ -74,7 +74,7 @@ public class PSMApplication extends Application {
                 terminateProcess(p.pid);
                 break;
             case "Read":
-                readProcess();
+                readProcess(p.add, p.pid);
                 break;
             case "Write":
                 writeProcess();
@@ -105,15 +105,33 @@ public class PSMApplication extends Application {
             }
 
             //Het geheugen van het proces vrijgeven
-            procList.get(temp).deallocate(procList);
+            (procList.get(temp)).deallocate(procList);
 
             //Het proces verwijderen
             procList.remove(temp);
         }
+
+        hd.clearProc(pid);
     }
 
-    public static void readProcess(){
-        //TODO read implementeren
+    public static void readProcess(int add, int pid){
+        hd.setPage(add, pid);
+        switchPageToRAM(add, pid);
+
+
+    }
+
+    private static void switchPageToRAM(int add, int pid) {
+        int temp = 0;
+        for (Proces proces : procList) {
+            if (proces.pid == pid) {
+                break;
+            }
+            temp++;
+        }
+
+        int pageNum = add/4096;
+
     }
 
     public static void writeProcess(){
