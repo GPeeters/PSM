@@ -4,11 +4,18 @@ import java.util.ArrayList;
 
 public class Proces {
     int pid;
-    static PageTable pageTable;
+    static Page[] PT;
+    static ArrayList<Page> framesInRam;
 
     public Proces(int pid){
+        Page[] PageT = new Page[16];
+        for(int i=0; i<16; i++){
+            PT[i] = new Page(0, 0, 0, i, pid);
+        }
+
         this.pid = pid;
-        this.pageTable = new PageTable();
+        this.PT = PageT;
+        this.framesInRam = new ArrayList<>();
 
 //        try{
 //            for (int i = 0; i < 12/(procList.size()+1); i++) {
@@ -41,92 +48,52 @@ public class Proces {
         return pid*4096;
     }
 
-    public static PageTable getPageTable() {
-        return pageTable;
+    public void addPageToRAM(int pnr){
+        PT[pnr].setPB(1);
+        framesInRam.add(PT[pnr]);
     }
 
-    public static void setPageTable(PageTable pageTable) {
-        Proces.pageTable = pageTable;
+    public void removePageFromRAM(int pnr){
+        framesInRam.remove(pnr);
+        setPagePBZero(pnr);
     }
 
-    public int getframe(ArrayList<Proces> procList) {
-        //schrijf hier methode om een frame te alloceren
-
-        //get process with the most frames
-        int temp_Aantalframes = -1;
-        int temp_procID = -1;
-        for (Proces proces : procList) {
-            int aantalFrames = 0;
-            for (int i=0; i<16; i++) {
-                Page page = pageTable.getPage(i);
-                if (page.PB == 1) {
-                    aantalFrames = aantalFrames + 1;
-                }
-            }
-            if(aantalFrames > temp_Aantalframes){
-                temp_Aantalframes = aantalFrames;
-                temp_procID = proces.pid;
-            }
+    public Page getPage(int nr) {
+        if(0 <= nr && nr < 16){
+            return PT[nr];
+        } else {
+            throw new RuntimeException("Page number out of bounds [0, 15]");
         }
-
-        //unload the page with the least accessed time
-        int LRU_time = 100000000;
-        int LRU_index = -1;
-        for (Page p : procList.get(temp_procID).pageTable) {
-            if(p.PB ==1 && p.LAT < LRU_time){
-                LRU_time = p.LAT;
-                LRU_index = procList.get(temp_procID).pageTable.indexOf(p);
-            }
-        }
-        Page p = procList.get(temp_procID).pageTable.get(LRU_index);
-        p.PB =0;
-        int allocatedframe = p.frameNum;
-        p.frameNum =-1;
-
-        //return the number of the allocated frame
-        return allocatedframe;
     }
 
-    public static void deallocate(ArrayList<Proces> procList) {
-        for (Page page: pageTable) {
+    public void setPage(int nr, Page pg) {
+        if(0 <= nr && nr < 16){
+            PT[nr] = pg;
+        } else {
+            throw new RuntimeException("Page number out of bounds [0, 15]");
+        }
+    }
+
+    public void setPagePBZero(int nr) {
+        if(0 <= nr && nr < 16){
+            PT[nr].setPB(0);
+        } else {
+            throw new RuntimeException("Page number out of bounds [0, 15]");
+        }
+    }
+
+    public int addressToPageNr(int address){
+        int PageNr = (int) Math.floor(address/4096);
+        return PageNr;
+    }
+
+    public static void deallocate() {
+        framesInRam = new ArrayList<>();
+        for (Page page: PT) {
             if (page.PB == 1){
-                freeFrame(page.frameNum, procList);
+                page.setPB(0);
             }
         }
     }
 
-    private static void freeFrame(int frameNum, ArrayList<Proces> procList) {
-
-        //get process with the least frames
-        int temp_Aantalframes = 100;
-        int temp_procID = -1;
-        for (Proces proces : procList) {
-            int aantalFrames = 0;
-            for (Page page : proces.pageTable) {
-                if (page.PB == 1) {
-                    aantalFrames = aantalFrames + 1;
-                }
-            }
-            if(aantalFrames < temp_Aantalframes){
-                temp_Aantalframes = aantalFrames;
-                temp_procID = proces.pid;
-            }
-        }
-
-        //load the page with het highest LRU
-        int LRU_time = -10;
-        int LRU_index = -1;
-        for (Page p : procList.get(temp_procID).pageTable) {
-            if(p.PB == 0 && p.LAT > LRU_time){
-                LRU_time = p.LAT;
-                LRU_index = procList.get(temp_procID).pageTable.indexOf(p);
-            }
-        }
-        Proces proc = procList.get(temp_procID);
-        Page page = proc.pageTable.get(LRU_index);
-        page.PB = 1;
-        page.frameNum = frameNum;
-
-
-    }
 }

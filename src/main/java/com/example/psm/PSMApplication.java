@@ -21,8 +21,9 @@ public class PSMApplication extends Application {
     static ArrayList<Instructie> pro_20000_4;
     static ArrayList<Instructie> pro_20000_20;
 
+    public static Proces[] Plist;
     static RAM Ram = new RAM();
-    static HardDrive hd = new HardDrive();
+    // static HardDrive hd = new HardDrive();
 
     static int i;
     static int time;
@@ -53,6 +54,11 @@ public class PSMApplication extends Application {
 
         i = 0;
         time = 0;
+
+        Plist = new Proces[20];
+        for (int j = 0; j < 20; j++) {
+            Plist[20] = new Proces(j);
+        }
 
         terminal = "Press a button to begin";
 
@@ -86,14 +92,14 @@ public class PSMApplication extends Application {
 
     public static void startProcess(int pid){
         //In de constructor van de klasse Process staat de ingewikkelde code.
-        Ram.addToRAM(new Proces(pid));
+        Ram.addToRAM(new Page(pid));
     }
 
     public static void terminateProcess(int pid){
+        if(Ram.getAantalProc() == 1){
+            // TODO clear de hele ram
 
-        if(procList.size() == 1){
-            procList.remove(0);
-        }else{
+        } else {
             //Het juiste proces zoeken
             int temp = 0;
             for (Proces proces : procList) {
@@ -116,8 +122,6 @@ public class PSMApplication extends Application {
     public static void readProcess(int add, int pid){
         hd.setPage(add, pid);
         switchPageToRAM(add, pid);
-
-
     }
 
     private static void switchPageToRAM(int add, int pid) {
