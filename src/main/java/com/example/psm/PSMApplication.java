@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static com.example.psm.RAM.switchPageToRAM;
 import static com.example.psm.ReadXML.ReadXML;
 
 
@@ -92,49 +93,16 @@ public class PSMApplication extends Application {
 
     public static void startProcess(int pid){
         //In de constructor van de klasse Process staat de ingewikkelde code.
-        Ram.addToRAM(new Page(pid));
+        Ram.addToRAM(Plist[pid]);
     }
 
     public static void terminateProcess(int pid){
-        if(Ram.getAantalProc() == 1){
-            // TODO clear de hele ram
-
-        } else {
-            //Het juiste proces zoeken
-            int temp = 0;
-            for (Proces proces : procList) {
-                if (proces.pid == pid) {
-                    break;
-                }
-                temp++;
-            }
-
-            //Het geheugen van het proces vrijgeven
-            (procList.get(temp)).deallocate(procList);
-
-            //Het proces verwijderen
-            procList.remove(temp);
-        }
-
-        hd.clearProc(pid);
+        Ram.removeFromRAM(Plist[pid]);
     }
 
     public static void readProcess(int add, int pid){
-        hd.setPage(add, pid);
-        switchPageToRAM(add, pid);
-    }
-
-    private static void switchPageToRAM(int add, int pid) {
-        int temp = 0;
-        for (Proces proces : procList) {
-            if (proces.pid == pid) {
-                break;
-            }
-            temp++;
-        }
-
-        int pageNum = add/4096;
-
+        int PNR = addressToPageNr(add);
+        switchPageToRAM(PNR, pid);
     }
 
     public static void writeProcess(){
@@ -182,5 +150,8 @@ public class PSMApplication extends Application {
         }
     }
 
+    public static int addressToPageNr(int address){
+        return (int) Math.floor(address/4096);
+    }
 }
 

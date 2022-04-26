@@ -12,8 +12,8 @@ public class RAM {
     // grootte van 1 frame: 4096
 
     public RAM() {
-        this.aantalProc = 0;
-        this.frames = new Page[12];
+        aantalProc = 0;
+        frames = new Page[12];
         this.procInRam = new ArrayList<>();
     }
 
@@ -113,116 +113,122 @@ public class RAM {
         }
     }
 
-    public boolean removeFromRAM(Proces p) {
-        Proces p2;
-        Proces p3;
-        Proces p4;
+    public void removeFromRAM(Proces p) {
+        Proces p2 = null;
+        Proces p3 = null;
+        Proces p4 = null;
+
+        int P2ind;
+        int P3ind;
 
         ArrayList<Integer> PIDs = getPIDs();
         int index = PIDs.indexOf(p.getPid());
-
-        if(index == -1){
-            // -1 betekent dat dit proces zich niet in het RAM bevindt
-            return false;
-        }
 
         // deze if is in principe niet nodig
         if (aantalProc > 0){
             switch (aantalProc){
                 case 1:
                     setAantalProc(0);
+                    for(int i=0;i<12;i++){
+                        getframe(p);
+                    }
+                    procInRam.remove(p.getPid());
                     break;
-                    // RAM moet niet leeggemaakt worden tot er een nieuw proces in komt
+                    // RAM moet niet toegewezen worden tot er een nieuw proces in komt
                 case 2:
                     setAantalProc(1);
-                    if(index == 6){
-                        p2 = frames[0];
-                    } else {
-                        p2 = frames[6];
-                    }
                     for(int i=0; i<12; i++){
-                        frames[i] = p2;
+                        if(frames[i].getPID() != p.getPid()){
+                            p2 = Plist[i];
+                            break;
+                        }
                     }
+
+                    for(int i=0;i<6;i++){
+                        int pnr =  getframe(p);
+                        frames[pnr] = p2.PT[p2.addPageToRAM()];
+                    }
+
+                    procInRam.remove(p.getPid());
                     break;
 
                 case 3:
                     setAantalProc(2);
-                    switch(index){
-                        case 0:
-                            p2 = frames[4];
-                            p3 = frames[8];
+                    P2ind = 0;
+
+                    for(int i=0; i<12; i++){
+                        if(frames[i].getPID() != p.getPid()){
+                            p2 = Plist[i];
+                            P2ind = i;
                             break;
-
-
-                        case 4:
-                            p2 = frames[0];
-                            p3 = frames[8];
-                            break;
-
-
-                        case 8:
-                            p2 = frames[0];
-                            p3 = frames[4];
-                            break;
-
-
-                        default:
-                            throw new RuntimeException("Impossible index of first occurence in RAM for process");
+                        }
                     }
 
-                    for(int i=0; i<6; i++){
-                        frames[i] = p2;
-                        frames[6+i] = p3;
+                    for(int i=0; i<12; i++){
+                        if(frames[i].getPID() != p.getPid() && i != P2ind){
+                            p3 = Plist[i];
+                            break;
+                        }
                     }
+
+                    for(int i=0;i<2;i++){
+                        int pnr =  getframe(p);
+                        frames[pnr] = p2.PT[p2.addPageToRAM()];
+                    }
+
+                    for(int i=0;i<2;i++){
+                        int pnr =  getframe(p);
+                        frames[pnr] = p3.PT[p3.addPageToRAM()];
+                    }
+
+                    procInRam.remove(p.getPid());
                     break;
 
                 case 4:
                     setAantalProc(3);
-                    switch(index){
-                        case 0:
-                            p2 = frames[3];
-                            p3 = frames[6];
-                            p4 = frames[9];
+
+                    P2ind = 0;
+                    P3ind = 0;
+
+                    for(int i=0; i<12; i++){
+                        if(frames[i].getPID() != p.getPid()){
+                            p2 = Plist[i];
+                            P2ind = i;
                             break;
-
-
-                        case 3:
-                            p2 = frames[0];
-                            p3 = frames[6];
-                            p4 = frames[9];
-                            break;
-
-
-                        case 6:
-                            p2 = frames[0];
-                            p3 = frames[3];
-                            p4 = frames[9];
-                            break;
-
-                        case 9:
-                            p2 = frames[0];
-                            p3 = frames[3];
-                            p4 = frames[6];
-                            break;
-
-                        default:
-                            throw new RuntimeException("Impossible index of first occurence in RAM for process");
+                        }
                     }
 
-                    for(int i=0; i<4; i++){
-                        frames[i] = p2;
-                        frames[4+i] = p3;
-                        frames[8+i] = p4;
+                    for(int i=0; i<12; i++){
+                        if(frames[i].getPID() != p.getPid() && i != P2ind){
+                            p3 = Plist[i];
+                            P3ind = i;
+                            break;
+                        }
                     }
+
+                    for(int i=0; i<12; i++){
+                        if(frames[i].getPID() != p.getPid() && i != P2ind && i != P3ind){
+                            p4 = Plist[i];
+                            break;
+                        }
+                    }
+
+                    frames[getframe(p)] = p2.PT[p2.addPageToRAM()];
+                    frames[getframe(p)] = p3.PT[p3.addPageToRAM()];
+                    frames[getframe(p)] = p3.PT[p3.addPageToRAM()];
+
+                    procInRam.remove(p.getPid());
                     break;
 
                 default:
                     throw new RuntimeException("Amount of processes in RAM is negative. This should not be possible.");
             }
-            return true;
-        } else {
-            return false;
         }
+    }
+
+
+    public static void switchPageToRAM(int PNR, int pid) {
+        frames[getframe(Plist[pid])] = Plist[pid].PT[PNR];
     }
 
     public int addressToPID(int address){
@@ -232,7 +238,7 @@ public class RAM {
         return PID;
     }
 
-    public int getframe(Proces p) {
+    public static int getframe(Proces p) {
         //unload the page with the lowest accessed time
         int LRU_time = 100000000;
         int LRU_index = -1;
@@ -244,10 +250,9 @@ public class RAM {
         }
         frames[LRU_index].PB = 0;
         p.removePageFromRAM(frames[LRU_index].pageNr);
-        int allocatedframe = frames[LRU_index].pageNr;
         frames[LRU_index].frameNum = -1;
 
         //return the number of the allocated frame
-        return allocatedframe;
+        return LRU_index;
     }
 }
