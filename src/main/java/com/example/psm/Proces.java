@@ -7,9 +7,10 @@ public class Proces {
     int virtAdd; // [0, 65535]
     static PageTable pageTable;
 
-    public Proces(int pid, PageTable pageTable, int virtAdd){
+    public Proces(int pid){
         this.pid = pid;
-        this.virtAdd = virtAdd;
+        this.virtAdd = -1;
+        this.pageTable = new PageTable();
 
 //        try{
 //            for (int i = 0; i < 12/(procList.size()+1); i++) {

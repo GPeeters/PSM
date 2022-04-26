@@ -7,6 +7,7 @@ import java.util.OptionalInt;
 public class RAM {
     static int aantalProc;
     static Proces[] Ram;
+    // totale grootte: 49152
 
     public RAM() {
         this.aantalProc = 0;
@@ -200,5 +201,12 @@ public class RAM {
         } else {
             return false;
         }
+    }
+
+    public int addressToPID(int address){
+        int frameNr = (int) Math.floor(address/4096);
+        int PID = Ram[frameNr].getPid();
+
+        return PID;
     }
 }
