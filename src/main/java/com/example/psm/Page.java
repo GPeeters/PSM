@@ -5,25 +5,25 @@ public class Page{
     int MB;
     int LAT;
     int frameNum;
-    // PageNr zou weggewerkt moeten kunnen worden maar is nu nodig om een page uit de pagetable PT te halen
     int pageNr;
 
     // Page bestaat uit: a) een present bit, (b) een modify bit, (c) de last access time, en (d) het corresponderende
     //framenummer. Het framenummer ligt in het interval [0,11].
+    // groote: 4096
 
     public Page() {
         this.PB = 0;
         this.MB = 0;
         this.LAT = 0;
-        this.frameNum = 0;
+        this.frameNum = -1;
         this.pageNr = -1;
     }
-    public Page(int PB, int MB, int LAT, int frameNum) {
+    public Page(int PB, int MB, int LAT, int pageNr) {
         this.PB = PB;
         this.MB = MB;
         this.LAT = LAT;
-        this.frameNum = frameNum;
-        this.pageNr = -1;
+        this.frameNum = -1;
+        this.pageNr = pageNr;
     }
 
     public int getPB() {

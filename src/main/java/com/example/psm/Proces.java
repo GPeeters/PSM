@@ -4,12 +4,10 @@ import java.util.ArrayList;
 
 public class Proces {
     int pid;
-    int virtAdd; // [0, 65535]
     static PageTable pageTable;
 
     public Proces(int pid){
         this.pid = pid;
-        this.virtAdd = -1;
         this.pageTable = new PageTable();
 
 //        try{
@@ -40,11 +38,7 @@ public class Proces {
     }
 
     public int getVirtAdd() {
-        return virtAdd;
-    }
-
-    public void setVirtAdd(int virtAdd) {
-        this.virtAdd = virtAdd;
+        return pid*4096;
     }
 
     public static PageTable getPageTable() {
@@ -63,7 +57,8 @@ public class Proces {
         int temp_procID = -1;
         for (Proces proces : procList) {
             int aantalFrames = 0;
-            for (Page page : pageTable) {
+            for (int i=0; i<16; i++) {
+                Page page = pageTable.getPage(i);
                 if (page.PB == 1) {
                     aantalFrames = aantalFrames + 1;
                 }

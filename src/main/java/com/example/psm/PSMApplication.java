@@ -21,8 +21,6 @@ public class PSMApplication extends Application {
     static ArrayList<Instructie> pro_20000_4;
     static ArrayList<Instructie> pro_20000_20;
 
-    static ArrayList<Proces> procList = new ArrayList<>(4);
-
     static RAM Ram = new RAM();
     static HardDrive hd = new HardDrive();
 
@@ -88,7 +86,7 @@ public class PSMApplication extends Application {
 
     public static void startProcess(int pid){
         //In de constructor van de klasse Process staat de ingewikkelde code.
-        procList.add(new Proces(pid, procList, time));
+        Ram.addToRAM(new Proces(pid));
     }
 
     public static void terminateProcess(int pid){

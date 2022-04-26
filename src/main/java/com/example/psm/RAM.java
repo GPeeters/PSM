@@ -1,17 +1,16 @@
 package com.example.psm;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.OptionalInt;
 
 public class RAM {
     static int aantalProc;
-    static Proces[] Ram;
+    static Proces[] frames;
     // totale grootte: 49152
+    // grootte van 1 frame: 4096
 
     public RAM() {
         this.aantalProc = 0;
-        this.Ram = new Proces[12];
+        this.frames = new Proces[12];
     }
 
     public static int getAantalProc() {
@@ -22,18 +21,18 @@ public class RAM {
         RAM.aantalProc = aantalProc;
     }
 
-    public static Proces[] getRam() {
-        return Ram;
+    public static Proces[] getFrames() {
+        return frames;
     }
 
-    public static void setRam(Proces[] ram) {
-        Ram = ram;
+    public static void setFrames(Proces[] frames) {
+        RAM.frames = frames;
     }
 
     public ArrayList<Integer> getPIDs(){
         ArrayList<Integer> PIDs = new ArrayList<>(12);
         for(int i=0; i<12; i++){
-            PIDs.set(i, Ram[i].getPid());
+            PIDs.set(i, frames[i].getPid());
         }
         return PIDs;
     }
@@ -48,37 +47,37 @@ public class RAM {
                 case 0:
                     setAantalProc(1);
                     for(int i=0; i<12; i++){
-                        Ram[i] = p;
+                        frames[i] = p;
                     }
                     break;
 
                 case 1:
                     setAantalProc(2);
                     for(int i=0; i<6; i++){
-                        Ram[i] = Ram[0];
-                        Ram[6+i] = p;
+                        frames[i] = frames[0];
+                        frames[6+i] = p;
                     }
                     break;
 
                 case 2:
                     setAantalProc(3);
-                    p2 = Ram[6];
+                    p2 = frames[6];
                     for(int i=0; i<4; i++){
-                        Ram[i] = Ram[0];
-                        Ram[4+i] = p2;
-                        Ram[8+i] = p;
+                        frames[i] = frames[0];
+                        frames[4+i] = p2;
+                        frames[8+i] = p;
                     }
                     break;
 
                 case 3:
                     setAantalProc(4);
-                    p2 = Ram[4];
-                    p3 = Ram[8];
+                    p2 = frames[4];
+                    p3 = frames[8];
                     for(int i=0; i<3; i++){
-                        Ram[i] = Ram[0];
-                        Ram[3+i] = p2;
-                        Ram[6+i] = p3;
-                        Ram[9+i] = p;
+                        frames[i] = frames[0];
+                        frames[3+i] = p2;
+                        frames[6+i] = p3;
+                        frames[9+i] = p;
                     }
                     break;
 
@@ -114,12 +113,12 @@ public class RAM {
                 case 2:
                     setAantalProc(1);
                     if(index == 6){
-                        p2 = Ram[0];
+                        p2 = frames[0];
                     } else {
-                        p2 = Ram[6];
+                        p2 = frames[6];
                     }
                     for(int i=0; i<12; i++){
-                        Ram[i] = p2;
+                        frames[i] = p2;
                     }
                     break;
 
@@ -127,20 +126,20 @@ public class RAM {
                     setAantalProc(2);
                     switch(index){
                         case 0:
-                            p2 = Ram[4];
-                            p3 = Ram[8];
+                            p2 = frames[4];
+                            p3 = frames[8];
                             break;
 
 
                         case 4:
-                            p2 = Ram[0];
-                            p3 = Ram[8];
+                            p2 = frames[0];
+                            p3 = frames[8];
                             break;
 
 
                         case 8:
-                            p2 = Ram[0];
-                            p3 = Ram[4];
+                            p2 = frames[0];
+                            p3 = frames[4];
                             break;
 
 
@@ -149,8 +148,8 @@ public class RAM {
                     }
 
                     for(int i=0; i<6; i++){
-                        Ram[i] = p2;
-                        Ram[6+i] = p3;
+                        frames[i] = p2;
+                        frames[6+i] = p3;
                     }
                     break;
 
@@ -158,29 +157,29 @@ public class RAM {
                     setAantalProc(3);
                     switch(index){
                         case 0:
-                            p2 = Ram[3];
-                            p3 = Ram[6];
-                            p4 = Ram[9];
+                            p2 = frames[3];
+                            p3 = frames[6];
+                            p4 = frames[9];
                             break;
 
 
                         case 3:
-                            p2 = Ram[0];
-                            p3 = Ram[6];
-                            p4 = Ram[9];
+                            p2 = frames[0];
+                            p3 = frames[6];
+                            p4 = frames[9];
                             break;
 
 
                         case 6:
-                            p2 = Ram[0];
-                            p3 = Ram[3];
-                            p4 = Ram[9];
+                            p2 = frames[0];
+                            p3 = frames[3];
+                            p4 = frames[9];
                             break;
 
                         case 9:
-                            p2 = Ram[0];
-                            p3 = Ram[3];
-                            p4 = Ram[6];
+                            p2 = frames[0];
+                            p3 = frames[3];
+                            p4 = frames[6];
                             break;
 
                         default:
@@ -188,9 +187,9 @@ public class RAM {
                     }
 
                     for(int i=0; i<4; i++){
-                        Ram[i] = p2;
-                        Ram[4+i] = p3;
-                        Ram[8+i] = p4;
+                        frames[i] = p2;
+                        frames[4+i] = p3;
+                        frames[8+i] = p4;
                     }
                     break;
 
@@ -205,7 +204,7 @@ public class RAM {
 
     public int addressToPID(int address){
         int frameNr = (int) Math.floor(address/4096);
-        int PID = Ram[frameNr].getPid();
+        int PID = frames[frameNr].getPid();
 
         return PID;
     }
