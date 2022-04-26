@@ -10,7 +10,7 @@ public class Proces {
     public Proces(int pid){
         Page[] PageT = new Page[16];
         for(int i=0; i<16; i++){
-            PT[i] = new Page(0, 0, 0, i, pid);
+            PageT[i] = new Page(0, 0, 0, i, pid);
         }
 
         this.pid = pid;

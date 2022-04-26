@@ -93,9 +93,10 @@
               <children>
                         <TableView fx:id="table" prefHeight="551.0" prefWidth="670.0">
                           <columns>
-                            <TableColumn id="columnOperation" fx:id="columnOperation" prefWidth="210.0" text="Operation" />
-                            <TableColumn id="columnPID" fx:id="columnPID" minWidth="7.0" prefWidth="67.0" text="PID" />
-                              <TableColumn id="columnAddress" fx:id="columnAddress" editable="false" prefWidth="392.0" text="Address" />
+                            <TableColumn id="PB" fx:id="PB" prefWidth="37.0" text="PB" />
+                            <TableColumn id="MB" fx:id="MB" minWidth="7.0" prefWidth="41.0" text="MB" />
+                              <TableColumn id="LAT" fx:id="LAT" editable="false" prefWidth="122.0" text="Last acces time" />
+                              <TableColumn id="frameNumber" fx:id="frameNumber" prefWidth="132.0" text="Frame Number" />
                           </columns>
                         </TableView>
               </children>

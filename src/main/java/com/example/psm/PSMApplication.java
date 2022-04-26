@@ -58,7 +58,7 @@ public class PSMApplication extends Application {
 
         Plist = new Proces[20];
         for (int j = 0; j < 20; j++) {
-            Plist[20] = new Proces(j);
+            Plist[j] = new Proces(j);
         }
 
         terminal = "Press a button to begin";

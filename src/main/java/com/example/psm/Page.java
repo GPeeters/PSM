@@ -16,7 +16,7 @@ public class Page{
         this.PB = 0;
         this.MB = 0;
         this.LAT = 0;
-        this.frameNum = -1;
+        this.frameNum = 99;
         this.pageNr = -1;
         this.PID = -1;
     }
@@ -24,7 +24,7 @@ public class Page{
         this.PB = PB;
         this.MB = MB;
         this.LAT = LAT;
-        this.frameNum = -1;
+        this.frameNum = 99;
         this.pageNr = pageNr;
         this.PID = PID;
     }

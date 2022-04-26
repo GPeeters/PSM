@@ -1,11 +1,11 @@
 package com.example.psm;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -14,6 +14,23 @@ import java.util.ResourceBundle;
 import static com.example.psm.PSMApplication.*;
 
 public class PSMController implements Initializable {
+    @FXML
+    private TableView table = new TableView();
+
+    @FXML
+    private TableView<PageModel> tbData;
+
+    @FXML
+    public TableColumn<PageModel, Integer> PB;
+
+    @FXML
+    public TableColumn<PageModel, Integer> MB;
+
+    @FXML
+    public TableColumn<PageModel, Integer> LAT;
+
+    @FXML
+    public TableColumn<PageModel, Integer> frameNumber;
 
     @FXML
     private Label l1, l2, timerText, timer, instruct, pid, prevAdd, nextAdd;
@@ -81,6 +98,12 @@ public class PSMController implements Initializable {
         nextAdd.setText("NextADD: " + getNextAddress());
     }
 
+    // add your data here from any source
+    private ObservableList<PageModel> PageModels = FXCollections.observableArrayList(
+            new PageModel(Plist[0].PT[0].PB,Plist[0].PT[0].MB, Plist[0].PT[0].LAT, Plist[0].PT[0].frameNum),
+            new PageModel(Plist[0].PT[1].PB,Plist[0].PT[1].MB, Plist[0].PT[1].LAT, Plist[0].PT[1].frameNum)
+    );
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         l1.setText("File Selected: Instructions_30_3.xml");
@@ -91,5 +114,14 @@ public class PSMController implements Initializable {
         pid.setText("ID: " + 0);
         prevAdd.setText("PrevADD: " + 0);
         nextAdd.setText("NextADD: " + 0);
+
+        //make sure the property value factory should be exactly same as the e.g getStudentId from your model class
+        PB.setCellValueFactory(new PropertyValueFactory<>("PB"));
+        MB.setCellValueFactory(new PropertyValueFactory<>("MB"));
+        LAT.setCellValueFactory(new PropertyValueFactory<>("LAT"));
+        frameNumber.setCellValueFactory(new PropertyValueFactory<>("frameNumber"));
+        //add your data to the table here.
+        // tbData.setItems(PageModels);
     }
+
 }
