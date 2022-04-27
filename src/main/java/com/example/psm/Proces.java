@@ -44,6 +44,7 @@ public class Proces {
     public void addPageToRAM(int pnr, int fnr){
         PT[pnr].PB = 1;
         PT[pnr].frameNumber = fnr;
+        PT[pnr].LAT = time;
     }
 
     // finds the first page that is not in the RAM yet
@@ -68,6 +69,8 @@ public class Proces {
             writeFromRam(pid, pnr, PT[pnr].frameNumber);
         }
         PT[pnr].PB = 0;
+        PT[pnr].frameNumber = -1;
+        PT[pnr].LAT = time;
     }
 
     public Page getPage(int nr) {

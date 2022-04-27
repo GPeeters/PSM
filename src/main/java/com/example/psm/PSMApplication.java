@@ -23,7 +23,7 @@ public class PSMApplication extends Application {
     static ArrayList<Instructie> pro_20000_20;
 
     public static Proces[] Plist;
-    static RAM Ram = new RAM();
+    public static RAM Ram = new RAM();
     // static HardDrive hd = new HardDrive();
 
     static int index;
@@ -136,6 +136,7 @@ public class PSMApplication extends Application {
                 writeCounter = 0;
                 active = pro_30_3;
                 activeName = "Instructions_30_3";
+                reset();
                 break;
 
             case 2:
@@ -144,6 +145,7 @@ public class PSMApplication extends Application {
                 writeCounter = 0;
                 active = pro_20000_4;
                 activeName = "Instructions_20000_4";
+                reset();
                 break;
 
             case 3:
@@ -152,6 +154,7 @@ public class PSMApplication extends Application {
                 writeCounter = 0;
                 active = pro_20000_20;
                 activeName = "Instructions_20000_20";
+                reset();
                 break;
 
             default:
@@ -160,6 +163,9 @@ public class PSMApplication extends Application {
     }
 
     public static Instructie getActive(){
+        if(index == active.size()){
+            return active.get(index-1);
+        }
         return active.get(index);
     }
 
@@ -176,14 +182,19 @@ public class PSMApplication extends Application {
         if (index < active.size() - 1) {
             return "" + active.get(index + 1).add;
         } else {
-            time = 0;
-            index = 0;
             return "END";
         }
     }
 
     public static int addressToPageNr(int address){
         return (int) Math.floor(address/4096);
+    }
+
+    public static void reset(){
+        Ram = new RAM();
+        for(int j=0;j<12;j++){
+            Ram.frames[j] = new Page(0, 0, 0, 0, -1);
+        }
     }
 }
 

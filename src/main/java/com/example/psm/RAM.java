@@ -119,7 +119,8 @@ public class RAM {
             case 1:
                 setAantalProc(0);
                 for(int i=0;i<12;i++){
-                    getframe(p);
+                    int fnr =  getframe(p);
+                    p.removePageFromRAM(frames[fnr].pageNr);
                 }
                 break;
                 // RAM moet niet toegewezen worden tot er een nieuw proces in komt
