@@ -15,7 +15,7 @@ public class Page{
     public Page() {
         this.PB = 0;
         this.MB = 0;
-        this.LAT = 0;
+        this.LAT = 99999;
         this.frameNumber = -1;
         this.pageNr = -1;
         this.PID = -1;

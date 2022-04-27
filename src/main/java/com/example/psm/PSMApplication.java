@@ -109,7 +109,6 @@ public class PSMApplication extends Application {
     public static void writeProcess(int add, int pid){
         int PNR = addressToPageNr(add);
         Plist[pid].setMB1(PNR);
-        switchPageToRAM(PNR, pid);
     }
 
 
@@ -118,14 +117,20 @@ public class PSMApplication extends Application {
             case 1:
                 i = 0;
                 active = pro_30_3;
+                activeName = "Instructions_30_3";
+                break;
 
             case 2:
                 i = 0;
                 active = pro_20000_4;
+                activeName = "Instructions_20000_4";
+                break;
 
             case 3:
                 i = 0;
                 active = pro_20000_20;
+                activeName = "Instructions_20000_20";
+                break;
 
             default:
                 break;

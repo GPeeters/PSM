@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import static com.example.psm.PSMApplication.*;
+import static com.example.psm.RAM.frames;
 
 public class PSMController implements Initializable {
     @FXML
@@ -28,6 +29,21 @@ public class PSMController implements Initializable {
 
     @FXML
     public TableColumn<PageModel, Integer> frameNumber;
+
+    @FXML
+    private TableView<PageModel> tbData1;
+
+    @FXML
+    public TableColumn<PageModel, Integer> PB1;
+
+    @FXML
+    public TableColumn<PageModel, Integer> MB1;
+
+    @FXML
+    public TableColumn<PageModel, Integer> LAT1;
+
+    @FXML
+    public TableColumn<PageModel, Integer> PID;
 
     @FXML
     private Label l1, l2, timerText, timer, instruct, pid, prevAdd, nextAdd;
@@ -75,11 +91,9 @@ public class PSMController implements Initializable {
     public void actionFile1(){
         setActive(1);
     }
-
     public void actionFile2(){
         setActive(2);
     }
-
     public void actionFile3(){
         setActive(3);
     }
@@ -113,6 +127,23 @@ public class PSMController implements Initializable {
                 new PageModel(PT[15].PB, PT[15].MB, PT[15].LAT, PT[15].frameNumber)
         );
         tbData.setItems(PageModels);
+
+        FrameModels = FXCollections.observableArrayList(
+                new PageModel(frames[0].PB, frames[0].MB, frames[0].LAT, frames[0].PID),
+                new PageModel(frames[1].PB, frames[1].MB, frames[1].LAT, frames[1].PID),
+                new PageModel(frames[2].PB, frames[2].MB, frames[2].LAT, frames[2].PID),
+                new PageModel(frames[3].PB, frames[3].MB, frames[3].LAT, frames[3].PID),
+                new PageModel(frames[4].PB, frames[4].MB, frames[4].LAT, frames[4].PID),
+                new PageModel(frames[5].PB, frames[5].MB, frames[5].LAT, frames[5].PID),
+                new PageModel(frames[6].PB, frames[6].MB, frames[6].LAT, frames[6].PID),
+                new PageModel(frames[7].PB, frames[7].MB, frames[7].LAT, frames[7].PID),
+                new PageModel(frames[8].PB, frames[8].MB, frames[8].LAT, frames[8].PID),
+                new PageModel(frames[9].PB, frames[9].MB, frames[9].LAT, frames[9].PID),
+                new PageModel(frames[10].PB, frames[10].MB, frames[10].LAT, frames[10].PID),
+                new PageModel(frames[11].PB, frames[11].MB, frames[11].LAT, frames[11].PID)
+        );
+
+        tbData1.setItems(FrameModels);
     }
 
     // add your data here from any source
@@ -136,6 +167,21 @@ public class PSMController implements Initializable {
             new PageModel(PT[15].PB, PT[15].MB, PT[15].LAT, PT[15].frameNumber)
     );
 
+    private ObservableList<PageModel> FrameModels = FXCollections.observableArrayList(
+            new PageModel(frames[0].PB, frames[0].MB, frames[0].LAT, frames[0].PID),
+            new PageModel(frames[1].PB, frames[1].MB, frames[1].LAT, frames[1].PID),
+            new PageModel(frames[2].PB, frames[2].MB, frames[2].LAT, frames[2].PID),
+            new PageModel(frames[3].PB, frames[3].MB, frames[3].LAT, frames[3].PID),
+            new PageModel(frames[4].PB, frames[4].MB, frames[4].LAT, frames[4].PID),
+            new PageModel(frames[5].PB, frames[5].MB, frames[5].LAT, frames[5].PID),
+            new PageModel(frames[6].PB, frames[6].MB, frames[6].LAT, frames[6].PID),
+            new PageModel(frames[7].PB, frames[7].MB, frames[7].LAT, frames[7].PID),
+            new PageModel(frames[8].PB, frames[8].MB, frames[8].LAT, frames[8].PID),
+            new PageModel(frames[9].PB, frames[9].MB, frames[9].LAT, frames[9].PID),
+            new PageModel(frames[10].PB, frames[10].MB, frames[10].LAT, frames[10].PID),
+            new PageModel(frames[11].PB, frames[11].MB, frames[11].LAT, frames[11].PID)
+    );
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         l1.setText("File Selected: Instructions_30_3.xml");
@@ -147,13 +193,19 @@ public class PSMController implements Initializable {
         prevAdd.setText("PrevADD: " + 0);
         nextAdd.setText("NextADD: " + 0);
 
-        //make sure the property value factory should be exactly same as the e.g getStudentId from your model class
         PB.setCellValueFactory(new PropertyValueFactory<>("PB"));
         MB.setCellValueFactory(new PropertyValueFactory<>("MB"));
         LAT.setCellValueFactory(new PropertyValueFactory<>("LAT"));
         frameNumber.setCellValueFactory(new PropertyValueFactory<>("frameNumber"));
-        //add your data to the table here.
+
         tbData.setItems(PageModels);
+
+        PB1.setCellValueFactory(new PropertyValueFactory<>("PB"));
+        MB1.setCellValueFactory(new PropertyValueFactory<>("MB"));
+        LAT1.setCellValueFactory(new PropertyValueFactory<>("LAT"));
+        PID.setCellValueFactory(new PropertyValueFactory<>("frameNumber"));
+
+        tbData1.setItems(FrameModels);
     }
 
 }

@@ -8,13 +8,16 @@ import static com.example.psm.PSMApplication.writeCounter;
 
 public class RAM {
     static int aantalProc;
-    static Page[] frames;
+    static Page[] frames = new Page[12];;
     // totale grootte: 49152
     // grootte van 1 frame: 4096
 
     public RAM() {
         aantalProc = 0;
         frames = new Page[12];
+        for(int i=0;i<12;i++){
+            frames[i] = new Page();
+        }
     }
 
     public static int getAantalProc() {
@@ -34,9 +37,9 @@ public class RAM {
     }
 
     public ArrayList<Integer> getPIDs(){
-        ArrayList<Integer> PIDs = new ArrayList<>(12);
+        ArrayList<Integer> PIDs = new ArrayList<>();
         for(int i=0; i<12; i++){
-            PIDs.set(i, frames[i].getPID());
+            PIDs.add(i, frames[i].getPID());
         }
         return PIDs;
     }
@@ -224,8 +227,8 @@ public class RAM {
         int frameNr = getframe(Plist[pid]);
         // mogelijks werkt dit niet correct
         Plist[pid].addPageToRAM(PNR, frameNr);
-        frames[frameNr] = Plist[pid].getPT()[PNR];
-
+        frames[frameNr] = Plist[pid].getPage(PNR);
+        writeCounter += 1;
     }
 
     public int addressToPID(int address){
@@ -246,6 +249,9 @@ public class RAM {
                     LRU_index = getFrameIndex(pg);
                 }
             }
+        }
+        if(frames[LRU_index].MB == 1){
+            Plist[frames[LRU_index].PID].setPage(frames[LRU_index].pageNr, frames[LRU_index]);
         }
         frames[LRU_index].PB = 0;
         p.removePageFromRAM(frames[LRU_index].pageNr);
@@ -275,7 +281,6 @@ public class RAM {
     public static void writeToRam(int pid, int pnr, int fnr){
         if(frames[fnr].MB == 1){
             Plist[pid].setPage(pnr, frames[fnr]);
-            writeCounter += 1;
         }
         frames[fnr].MB = 1;
         writeCounter += 1;

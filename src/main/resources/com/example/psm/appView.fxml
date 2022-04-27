@@ -89,16 +89,26 @@
         </AnchorPane>
         <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
           <content>
-            <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0" prefWidth="430.0">
+            <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="556.0" prefWidth="669.0">
               <children>
-                        <TableView fx:id="tbData" prefHeight="551.0" prefWidth="670.0">
+                        <TableView fx:id="tbData" layoutY="26.0" prefHeight="525.0" prefWidth="332.0">
                           <columns>
                             <TableColumn id="PB" fx:id="PB" prefWidth="37.0" text="PB" />
                             <TableColumn id="MB" fx:id="MB" minWidth="7.0" prefWidth="41.0" text="MB" />
-                              <TableColumn id="LAT" fx:id="LAT" editable="false" prefWidth="122.0" text="Last acces time" />
-                              <TableColumn id="frameNumber" fx:id="frameNumber" prefWidth="132.0" text="Frame Number" />
+                              <TableColumn id="LAT" fx:id="LAT" editable="false" prefWidth="98.0" text="Last acces time" />
+                              <TableColumn id="frameNumber" fx:id="frameNumber" prefWidth="92.0" text="Frame Number" />
                           </columns>
                         </TableView>
+                        <TableView fx:id="tbData1" layoutX="332.0" layoutY="26.0" prefHeight="525.0" prefWidth="337.0">
+                           <columns>
+                              <TableColumn id="PB" fx:id="PB1" prefWidth="37.0" text="PB" />
+                              <TableColumn id="MB" fx:id="MB1" minWidth="7.0" prefWidth="41.0" text="MB" />
+                              <TableColumn id="LAT" fx:id="LAT1" editable="false" prefWidth="98.0" text="Last acces time" />
+                              <TableColumn id="frameNumber" fx:id="PID" prefWidth="49.0" text="PID" />
+                           </columns>
+                        </TableView>
+                        <Label alignment="CENTER" layoutX="2.0" prefHeight="25.0" prefWidth="328.0" text="Active Process Page Table" />
+                        <Label alignment="CENTER" layoutX="337.0" prefHeight="25.0" prefWidth="328.0" text="RAM frames" />
               </children>
             </AnchorPane>
           </content>

@@ -12,7 +12,7 @@ public class Proces {
     public Proces(int pid){
         PT = new Page[16];
         for(int i=0; i<16; i++){
-            PT[i] = new Page(0, 0, 0, i, pid);
+            PT[i] = new Page(0, 0, 99999, i, pid);
         }
 
         this.pid = pid;
@@ -78,6 +78,7 @@ public class Proces {
     public void setPage(int nr, Page pg) {
         if(0 <= nr && nr < 16){
             PT[nr] = pg;
+            writeCounter += 1;
         } else {
             throw new RuntimeException("Page number out of bounds [0, 15]");
         }
