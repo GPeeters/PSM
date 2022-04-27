@@ -195,6 +195,10 @@ public class PSMApplication extends Application {
         for(int j=0;j<12;j++){
             Ram.frames[j] = new Page(0, 0, 0, 0, -1);
         }
+        Plist = new Proces[16];
+        for(int j=0;j<16;j++){
+            Plist[j] = new Proces(j);
+        }
     }
 }
 
