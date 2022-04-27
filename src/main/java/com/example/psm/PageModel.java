@@ -5,13 +5,13 @@ public class PageModel {
     private SimpleIntegerProperty PB;
     private SimpleIntegerProperty MB;
     private SimpleIntegerProperty LAT;
-    private SimpleIntegerProperty frameNum;
+    private SimpleIntegerProperty frameNumber;
 
-    public PageModel(Integer PB, Integer MB, Integer LAT, Integer frameNum) {
+    public PageModel(Integer PB, Integer MB, Integer LAT, Integer frameNumber) {
         this.PB = new SimpleIntegerProperty(PB);
         this.MB = new SimpleIntegerProperty(MB);
         this.LAT = new SimpleIntegerProperty(LAT);
-        this.frameNum = new SimpleIntegerProperty(frameNum);
+        this.frameNumber = new SimpleIntegerProperty(frameNumber);
     }
 
     public int getPB() {
@@ -50,15 +50,15 @@ public class PageModel {
         this.LAT.set(LAT);
     }
 
-    public int getFrameNum() {
-        return frameNum.get();
+    public int getFrameNumber() {
+        return frameNumber.get();
     }
 
-    public SimpleIntegerProperty frameNumProperty() {
-        return frameNum;
+    public SimpleIntegerProperty frameNumberProperty() {
+        return frameNumber;
     }
 
-    public void setFrameNum(int frameNum) {
-        this.frameNum.set(frameNum);
+    public void setFrameNumber(int frameNum) {
+        this.frameNumber.set(frameNum);
     }
 }

@@ -4,7 +4,7 @@ public class Page{
     int PB;
     int MB;
     int LAT;
-    int frameNum;
+    int frameNumber;
     int pageNr;
     int PID;
 
@@ -16,17 +16,17 @@ public class Page{
         this.PB = 0;
         this.MB = 0;
         this.LAT = 0;
-        this.frameNum = -1;
+        this.frameNumber = -1;
         this.pageNr = -1;
         this.PID = -1;
     }
-    public Page(int PB, int MB, int LAT, int pageNr, int PID) {
+    public Page(int PB, int MB, int LAT, int pageNr, int pid) {
         this.PB = PB;
         this.MB = MB;
         this.LAT = LAT;
-        this.frameNum = -1;
+        this.frameNumber = -1;
         this.pageNr = pageNr;
-        this.PID = PID;
+        this.PID = pid;
     }
 
     public int getPB() {
@@ -53,12 +53,12 @@ public class Page{
         this.LAT = LAT;
     }
 
-    public int getFrameNum() {
-        return frameNum;
+    public int getFrameNumber() {
+        return frameNumber;
     }
 
-    public void setFrameNum(int frameNum) {
-        this.frameNum = frameNum;
+    public void setFrameNumber(int frameNumber) {
+        this.frameNumber = frameNumber;
     }
 
     public int getPageNr() {

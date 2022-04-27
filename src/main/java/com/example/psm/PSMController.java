@@ -15,9 +15,6 @@ import static com.example.psm.PSMApplication.*;
 
 public class PSMController implements Initializable {
     @FXML
-    private TableView table = new TableView();
-
-    @FXML
     private TableView<PageModel> tbData;
 
     @FXML
@@ -96,12 +93,47 @@ public class PSMController implements Initializable {
         pid.setText("ID: " + getActive().pid);
         prevAdd.setText("PrevADD: " + getActive().add);
         nextAdd.setText("NextADD: " + getNextAddress());
+        Page[] PT = Plist[getActive().pid].getPT();
+        PageModels = FXCollections.observableArrayList(
+                new PageModel(PT[0].PB, PT[0].MB, PT[0].LAT, PT[0].frameNumber),
+                new PageModel(PT[1].PB, PT[1].MB, PT[1].LAT, PT[1].frameNumber),
+                new PageModel(PT[2].PB, PT[2].MB, PT[2].LAT, PT[2].frameNumber),
+                new PageModel(PT[3].PB, PT[3].MB, PT[3].LAT, PT[3].frameNumber),
+                new PageModel(PT[4].PB, PT[4].MB, PT[4].LAT, PT[4].frameNumber),
+                new PageModel(PT[5].PB, PT[5].MB, PT[5].LAT, PT[5].frameNumber),
+                new PageModel(PT[6].PB, PT[6].MB, PT[6].LAT, PT[6].frameNumber),
+                new PageModel(PT[7].PB, PT[7].MB, PT[7].LAT, PT[7].frameNumber),
+                new PageModel(PT[8].PB, PT[8].MB, PT[8].LAT, PT[8].frameNumber),
+                new PageModel(PT[9].PB, PT[9].MB, PT[9].LAT, PT[9].frameNumber),
+                new PageModel(PT[10].PB, PT[10].MB, PT[10].LAT, PT[10].frameNumber),
+                new PageModel(PT[11].PB, PT[11].MB, PT[11].LAT, PT[11].frameNumber),
+                new PageModel(PT[12].PB, PT[12].MB, PT[12].LAT, PT[12].frameNumber),
+                new PageModel(PT[13].PB, PT[13].MB, PT[13].LAT, PT[13].frameNumber),
+                new PageModel(PT[14].PB, PT[14].MB, PT[14].LAT, PT[14].frameNumber),
+                new PageModel(PT[15].PB, PT[15].MB, PT[15].LAT, PT[15].frameNumber)
+        );
+        tbData.setItems(PageModels);
     }
 
     // add your data here from any source
+    Page[] PT = Plist[i].getPT();
     private ObservableList<PageModel> PageModels = FXCollections.observableArrayList(
-            new PageModel(Plist[0].PT[0].PB,Plist[0].PT[0].MB, Plist[0].PT[0].LAT, Plist[0].PT[0].frameNum),
-            new PageModel(Plist[0].PT[1].PB,Plist[0].PT[1].MB, Plist[0].PT[1].LAT, Plist[0].PT[1].frameNum)
+            new PageModel(PT[0].PB, PT[0].MB, PT[0].LAT, PT[0].frameNumber),
+            new PageModel(PT[1].PB, PT[1].MB, PT[1].LAT, PT[1].frameNumber),
+            new PageModel(PT[2].PB, PT[2].MB, PT[2].LAT, PT[2].frameNumber),
+            new PageModel(PT[3].PB, PT[3].MB, PT[3].LAT, PT[3].frameNumber),
+            new PageModel(PT[4].PB, PT[4].MB, PT[4].LAT, PT[4].frameNumber),
+            new PageModel(PT[5].PB, PT[5].MB, PT[5].LAT, PT[5].frameNumber),
+            new PageModel(PT[6].PB, PT[6].MB, PT[6].LAT, PT[6].frameNumber),
+            new PageModel(PT[7].PB, PT[7].MB, PT[7].LAT, PT[7].frameNumber),
+            new PageModel(PT[8].PB, PT[8].MB, PT[8].LAT, PT[8].frameNumber),
+            new PageModel(PT[9].PB, PT[9].MB, PT[9].LAT, PT[9].frameNumber),
+            new PageModel(PT[10].PB, PT[10].MB, PT[10].LAT, PT[10].frameNumber),
+            new PageModel(PT[11].PB, PT[11].MB, PT[11].LAT, PT[11].frameNumber),
+            new PageModel(PT[12].PB, PT[12].MB, PT[12].LAT, PT[12].frameNumber),
+            new PageModel(PT[13].PB, PT[13].MB, PT[13].LAT, PT[13].frameNumber),
+            new PageModel(PT[14].PB, PT[14].MB, PT[14].LAT, PT[14].frameNumber),
+            new PageModel(PT[15].PB, PT[15].MB, PT[15].LAT, PT[15].frameNumber)
     );
 
     @Override
@@ -121,7 +153,7 @@ public class PSMController implements Initializable {
         LAT.setCellValueFactory(new PropertyValueFactory<>("LAT"));
         frameNumber.setCellValueFactory(new PropertyValueFactory<>("frameNumber"));
         //add your data to the table here.
-        // tbData.setItems(PageModels);
+        tbData.setItems(PageModels);
     }
 
 }

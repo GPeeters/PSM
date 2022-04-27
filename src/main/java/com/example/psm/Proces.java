@@ -4,18 +4,15 @@ import java.util.ArrayList;
 
 public class Proces {
     int pid;
-    static Page[] PT;
-    static ArrayList<Page> framesInRam;
+    private Page[] PT;
 
     public Proces(int pid){
-        Page[] PageT = new Page[16];
+        PT = new Page[16];
         for(int i=0; i<16; i++){
-            PageT[i] = new Page(0, 0, 0, i, pid);
+            PT[i] = new Page(0, 0, 0, i, pid);
         }
 
         this.pid = pid;
-        PT = PageT;
-        framesInRam = new ArrayList<>();
 
     }
 
@@ -31,14 +28,24 @@ public class Proces {
         return pid*4096;
     }
 
-    public void addPageToRAM(int pnr){
+    public Page[] getPT() {
+        return PT;
+    }
+
+    public void setPT(Page[] PT) {
+        this.PT = PT;
+    }
+
+    // function may not be used on its own, frameNr still has to be appointed
+    public void addPageToRAM(int pnr, int fnr){
         PT[pnr].setPB(1);
-        framesInRam.add(PT[pnr]);
+        PT[pnr].setFrameNumber(fnr);
     }
     // finds the first page that is not in the RAM yet
     public int addPageToRAM(){
         int pnr = 0;
         ArrayList<Integer> pagesInRam = new ArrayList<>();
+        ArrayList<Page> framesInRam = getFramesInRam();
         for(Page page: framesInRam){
             pagesInRam.add(page.getPageNr());
         }
@@ -50,12 +57,10 @@ public class Proces {
         }
 
         PT[pnr].setPB(1);
-        framesInRam.add(PT[pnr]);
         return pnr;
     }
 
     public void removePageFromRAM(int pnr){
-        framesInRam.remove(pnr);
         setPagePBZero(pnr);
     }
 
@@ -81,6 +86,20 @@ public class Proces {
         } else {
             throw new RuntimeException("Page number out of bounds [0, 15]");
         }
+    }
+
+    public void setFrameNumber(int pageNr, int frameNumber) {
+        PT[pageNr].setFrameNumber(frameNumber);
+    }
+
+    public ArrayList<Page> getFramesInRam(){
+        ArrayList<Page> FIR = new ArrayList<>();
+        for(int i=0;i<16;i++){
+            if(PT[i].PB == 1){
+                FIR.add(PT[i]);
+            }
+        }
+        return FIR;
     }
 
 }

@@ -91,7 +91,7 @@
           <content>
             <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0" prefWidth="430.0">
               <children>
-                        <TableView fx:id="table" prefHeight="551.0" prefWidth="670.0">
+                        <TableView fx:id="tbData" prefHeight="551.0" prefWidth="670.0">
                           <columns>
                             <TableColumn id="PB" fx:id="PB" prefWidth="37.0" text="PB" />
                             <TableColumn id="MB" fx:id="MB" minWidth="7.0" prefWidth="41.0" text="MB" />
