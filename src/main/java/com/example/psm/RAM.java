@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import static com.example.psm.PSMApplication.Plist;
+import static com.example.psm.PSMApplication.writeCounter;
 
 public class RAM {
     static int aantalProc;
@@ -269,5 +270,14 @@ public class RAM {
             }
         }
         return procs;
+    }
+
+    public static void writeToRam(int pid, int pnr, int fnr){
+        if(frames[fnr].MB == 1){
+            Plist[pid].setPage(pnr, frames[fnr]);
+            writeCounter += 1;
+        }
+        frames[fnr].MB = 1;
+        writeCounter += 1;
     }
 }

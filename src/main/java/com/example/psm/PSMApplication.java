@@ -28,6 +28,7 @@ public class PSMApplication extends Application {
 
     static int i;
     static int time;
+    static int writeCounter;
 
     static String activeName = "Instructions_30_3";
     static String terminal;
@@ -83,7 +84,7 @@ public class PSMApplication extends Application {
                 readProcess(p.add, p.pid);
                 break;
             case "Write":
-                writeProcess();
+                writeProcess(p.add, p.pid);
                 break;
             default:
                 System.out.println("ERROR op code unknown");
@@ -105,8 +106,10 @@ public class PSMApplication extends Application {
         switchPageToRAM(PNR, pid);
     }
 
-    public static void writeProcess(){
-        //TODO write implementeren
+    public static void writeProcess(int add, int pid){
+        int PNR = addressToPageNr(add);
+        Plist[pid].setMB1(PNR);
+        switchPageToRAM(PNR, pid);
     }
 
 

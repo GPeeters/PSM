@@ -2,6 +2,9 @@ package com.example.psm;
 
 import java.util.ArrayList;
 
+import static com.example.psm.PSMApplication.writeCounter;
+import static com.example.psm.RAM.getframe;
+
 public class Proces {
     int pid;
     private Page[] PT;
@@ -102,4 +105,21 @@ public class Proces {
         return FIR;
     }
 
+    public void setMB1(int pnr) {
+        if(PT[pnr].PB == 1){
+            if(PT[pnr].MB == 1){
+                RAM.writeToRam(pid, pnr, PT[pnr].frameNumber);
+            } else {
+                RAM.writeToRam(pid, pnr, PT[pnr].frameNumber);
+                PT[pnr].MB = 1;
+            }
+        } else {
+            PT[pnr].MB = 1;
+            addPageToRAM(pnr, getframe(this));
+        }
+
+    }
+    public void setMB0(int pnr) {
+        PT[pnr].MB = 0;
+    }
 }
