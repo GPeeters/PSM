@@ -69,16 +69,16 @@ public class PSMController implements Initializable {
         terminal = "1 proces werd uitgevoerd";
         executeAction();
         updateView();
-        if(i==active.size()-1) i = 0;
-        else i = i+1;
+        if(index==active.size()-1) index = 0;
+        else index = index+1;
     }
     public void allProcess() {
         // TODO acties die gepaard gaan met alles uitvoeren hier implementeren
         terminal = "Alle processen worden uitgevoerd";
-        while (i < active.size()-1) {
+        while (index < active.size()-1) {
             executeAction();
             updateView();
-            i = i+1;
+            index = index+1;
         }
         terminal = "Done";
         updateView();
@@ -147,7 +147,7 @@ public class PSMController implements Initializable {
     }
 
     // add your data here from any source
-    Page[] PT = Plist[i].getPT();
+    Page[] PT = Plist[index].getPT();
     private ObservableList<PageModel> PageModels = FXCollections.observableArrayList(
             new PageModel(PT[0].PB, PT[0].MB, PT[0].LAT, PT[0].frameNumber),
             new PageModel(PT[1].PB, PT[1].MB, PT[1].LAT, PT[1].frameNumber),

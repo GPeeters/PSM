@@ -26,7 +26,7 @@ public class PSMApplication extends Application {
     static RAM Ram = new RAM();
     // static HardDrive hd = new HardDrive();
 
-    static int i;
+    static int index;
     static int time;
     static int writeCounter;
 
@@ -54,7 +54,7 @@ public class PSMApplication extends Application {
         active = pro_30_3;
         activeName = "Instructions_30_3";
 
-        i = 0;
+        index = 0;
         time = 0;
 
         Plist = new Proces[20];
@@ -69,7 +69,7 @@ public class PSMApplication extends Application {
 
     public static void executeAction(){
         time = time + 1;
-        checkOp(active.get(i));
+        checkOp(active.get(index));
     }
 
     public static void checkOp(Instructie p){
@@ -103,31 +103,43 @@ public class PSMApplication extends Application {
 
     public static void readProcess(int add, int pid){
         int PNR = addressToPageNr(add);
-        switchPageToRAM(PNR, pid);
+        Plist[pid].setPageTime(PNR);
+        ArrayList<Integer> pagesInRam = new ArrayList<>();
+        ArrayList<Page> framesInRam = Plist[pid].getFramesInRam();
+        for(Page page: framesInRam){
+            pagesInRam.add(page.getPageNr());
+        }
+
+        if(pagesInRam.contains(PNR)){
+            RAM.setFrameTime(Plist[pid].getPage(PNR).frameNumber);
+        } else {
+            switchPageToRAM(PNR, pid);
+        }
+
     }
 
     public static void writeProcess(int add, int pid){
         int PNR = addressToPageNr(add);
-        Plist[pid].setMB1(PNR);
+        Plist[pid].write(PNR);
     }
 
 
     public static void setActive(int num){
         switch(num){
             case 1:
-                i = 0;
+                index = 0;
                 active = pro_30_3;
                 activeName = "Instructions_30_3";
                 break;
 
             case 2:
-                i = 0;
+                index = 0;
                 active = pro_20000_4;
                 activeName = "Instructions_20000_4";
                 break;
 
             case 3:
-                i = 0;
+                index = 0;
                 active = pro_20000_20;
                 activeName = "Instructions_20000_20";
                 break;
@@ -138,7 +150,7 @@ public class PSMApplication extends Application {
     }
 
     public static Instructie getActive(){
-        return active.get(i);
+        return active.get(index);
     }
 
     public static int getTime(){
@@ -151,9 +163,11 @@ public class PSMApplication extends Application {
         return terminal;
     }
     public static String getNextAddress() {
-        if (i < active.size() - 1) {
-            return "" + active.get(i + 1).add;
+        if (index < active.size() - 1) {
+            return "" + active.get(index + 1).add;
         } else {
+            time = 0;
+            index = 0;
             return "END";
         }
     }

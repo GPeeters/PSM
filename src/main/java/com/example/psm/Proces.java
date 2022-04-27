@@ -2,8 +2,10 @@ package com.example.psm;
 
 import java.util.ArrayList;
 
+import static com.example.psm.PSMApplication.time;
 import static com.example.psm.PSMApplication.writeCounter;
 import static com.example.psm.RAM.getframe;
+import static com.example.psm.RAM.writeFromRam;
 
 public class Proces {
     int pid;
@@ -39,13 +41,13 @@ public class Proces {
         this.PT = PT;
     }
 
-    // function may not be used on its own, frameNr still has to be appointed
     public void addPageToRAM(int pnr, int fnr){
-        PT[pnr].setPB(1);
-        PT[pnr].setFrameNumber(fnr);
+        PT[pnr].PB = 1;
+        PT[pnr].frameNumber = fnr;
     }
+
     // finds the first page that is not in the RAM yet
-    public int addPageToRAM(){
+    public int findPageNotInRAM(){
         int pnr = 0;
         ArrayList<Integer> pagesInRam = new ArrayList<>();
         ArrayList<Page> framesInRam = getFramesInRam();
@@ -58,13 +60,14 @@ public class Proces {
                 break;
             }
         }
-
-        PT[pnr].setPB(1);
         return pnr;
     }
 
     public void removePageFromRAM(int pnr){
-        setPagePBZero(pnr);
+        if(PT[pnr].MB == 1){
+            writeFromRam(pid, pnr, PT[pnr].frameNumber);
+        }
+        PT[pnr].PB = 0;
     }
 
     public Page getPage(int nr) {
@@ -77,7 +80,9 @@ public class Proces {
 
     public void setPage(int nr, Page pg) {
         if(0 <= nr && nr < 16){
+            // pg.MB = 0;
             PT[nr] = pg;
+            PT[nr].frameNumber = -1;
             writeCounter += 1;
         } else {
             throw new RuntimeException("Page number out of bounds [0, 15]");
@@ -106,21 +111,30 @@ public class Proces {
         return FIR;
     }
 
-    public void setMB1(int pnr) {
+    public void write(int pnr) {
+        PT[pnr].LAT = time;
         if(PT[pnr].PB == 1){
-            if(PT[pnr].MB == 1){
-                RAM.writeToRam(pid, pnr, PT[pnr].frameNumber);
-            } else {
-                RAM.writeToRam(pid, pnr, PT[pnr].frameNumber);
-                PT[pnr].MB = 1;
-            }
+            RAM.writeOverRam(pid, pnr, PT[pnr].frameNumber);
         } else {
+            PT[pnr].PB = 1;
             PT[pnr].MB = 1;
-            addPageToRAM(pnr, getframe(this));
+            RAM.writeToRam(pid, pnr, getframe(this));
         }
 
     }
-    public void setMB0(int pnr) {
-        PT[pnr].MB = 0;
+    public void setMB(int pnr, int b) {
+        PT[pnr].MB = b;
+    }
+
+    public void setPagePB(int pnr, int pb) {
+        PT[pnr].PB = pb;
+    }
+
+    public void setPageFrameNumber(int pnr, int fn) {
+        PT[pnr].frameNumber = fn;
+    }
+
+    public void setPageTime(int pnr) {
+        PT[pnr].LAT = time;
     }
 }

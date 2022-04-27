@@ -3,12 +3,11 @@ package com.example.psm;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static com.example.psm.PSMApplication.Plist;
-import static com.example.psm.PSMApplication.writeCounter;
+import static com.example.psm.PSMApplication.*;
 
 public class RAM {
     static int aantalProc;
-    static Page[] frames = new Page[12];;
+    static Page[] frames = new Page[12];
     // totale grootte: 49152
     // grootte van 1 frame: 4096
 
@@ -20,20 +19,8 @@ public class RAM {
         }
     }
 
-    public static int getAantalProc() {
-        return aantalProc;
-    }
-
     public static void setAantalProc(int aantalProc) {
         RAM.aantalProc = aantalProc;
-    }
-
-    public static Page[] getFrames() {
-        return frames;
-    }
-
-    public static void setFrames(Page[] frames) {
-        RAM.frames = frames;
     }
 
     public ArrayList<Integer> getPIDs(){
@@ -46,9 +33,10 @@ public class RAM {
 
     public boolean addToRAM(Proces p) {
         // Check if still room in RAM
-        Proces p2;
-        Proces p3;
-        Proces p4;
+        int PID = p.getPid();
+        int PID2;
+        int PID3;
+        int PID4;
 
         ArrayList<Integer> procInRam = getActiveProcs();
 
@@ -57,30 +45,34 @@ public class RAM {
                 case 0:
                     setAantalProc(1);
                     for(int i=0; i<12; i++){
-                        frames[i] = p.getPT()[i];
+                        Plist[PID].setPageTime(i);
+                        frames[i] = Plist[PID].getPage(i);
                         p.addPageToRAM(i,i);
                     }
                     break;
 
                 case 1:
                     setAantalProc(2);
-                    p2 = Plist[procInRam.get(0)];
+                    PID2 = procInRam.get(0);
                     for(int i=0; i<6; i++){
-                        int released = getframe(p2);
-                        frames[released] = p.getPT()[i];
+                        int released = getframe(Plist[PID2]);
+                        Plist[PID].setPageTime(i);
+                        frames[released] = Plist[PID].getPage(i);
                         p.addPageToRAM(i, released);
                     }
                     break;
 
                 case 2:
                     setAantalProc(3);
-                    p2 = Plist[procInRam.get(0)];
-                    p3 = Plist[procInRam.get(1)];
+                    PID2 = procInRam.get(0);
+                    PID3 = procInRam.get(1);
                     for(int i=0; i<2; i++){
-                        int r1 = getframe(p2);
-                        int r2 = getframe(p3);
-                        frames[r1] = p.getPT()[i];
-                        frames[r2] = p.getPT()[i+2];
+                        int r1 = getframe(Plist[PID2]);
+                        int r2 = getframe(Plist[PID3]);
+                        Plist[PID].setPageTime(i);
+                        Plist[PID].setPageTime(i+2);
+                        frames[r1] = Plist[PID].getPage(i);
+                        frames[r2] = Plist[PID].getPage(i+2);
                         p.addPageToRAM(i, r1);
                         p.addPageToRAM(i+2, r2);
                     }
@@ -88,17 +80,18 @@ public class RAM {
 
                 case 3:
                     setAantalProc(4);
-                    p2 = Plist[procInRam.get(0)];
-                    p3 = Plist[procInRam.get(1)];
-                    p4 = Plist[procInRam.get(2)];
+                    PID2 = procInRam.get(0);
+                    PID3 = procInRam.get(1);
+                    PID4 = procInRam.get(2);
 
-                    int r1 = getframe(p2);
-                    int r2 = getframe(p3);
-                    int r3 = getframe(p4);
+                    int r1 = getframe(Plist[PID2]);
+                    int r2 = getframe(Plist[PID3]);
+                    int r3 = getframe(Plist[PID4]);
 
-                    frames[r1] = p.getPT()[0];
-                    frames[r2] = p.getPT()[1];
-                    frames[r3] = p.getPT()[2];
+                    frames[r1] = Plist[PID].getPage(0);
+                    frames[r2] = Plist[PID].getPage(1);
+                    frames[r3] = Plist[PID].getPage(2);
+
                     p.addPageToRAM(0, r1);
                     p.addPageToRAM(1, r2);
                     p.addPageToRAM(2, r3);
@@ -115,110 +108,110 @@ public class RAM {
     }
 
     public void removeFromRAM(Proces p) {
-        Proces p2 = null;
-        Proces p3 = null;
-        Proces p4 = null;
-
-        int P2ind;
-        int P3ind;
+        int p2 = -1;
+        int p3 = -1;
+        int p4 = -1;
 
         ArrayList<Integer> PIDs = getPIDs();
         int index = PIDs.indexOf(p.getPid());
 
-        // deze if is in principe niet nodig
-        if (aantalProc > 0){
-            switch (aantalProc){
-                case 1:
-                    setAantalProc(0);
-                    for(int i=0;i<12;i++){
-                        getframe(p);
+        switch (aantalProc){
+            case 1:
+                setAantalProc(0);
+                for(int i=0;i<12;i++){
+                    getframe(p);
+                }
+                break;
+                // RAM moet niet toegewezen worden tot er een nieuw proces in komt
+            case 2:
+                setAantalProc(1);
+                for(int i=0; i<12; i++){
+                    if(frames[i].getPID() != p.getPid()){
+                        p2 = frames[i].PID;
+                        break;
                     }
-                    break;
-                    // RAM moet niet toegewezen worden tot er een nieuw proces in komt
-                case 2:
-                    setAantalProc(1);
-                    for(int i=0; i<12; i++){
-                        if(frames[i].getPID() != p.getPid()){
-                            p2 = Plist[i];
-                            break;
-                        }
+                }
+
+                if(p2 == -1){
+                    throw new RuntimeException("Tried to remove a process from RAM that wasn't there");
+                }
+
+                for(int i=0;i<6;i++){
+                    int fnr =  getframe(p);
+                    int pnr = Plist[p2].findPageNotInRAM();
+                    addPageToRAM(p2, pnr, fnr);
+                }
+
+                break;
+
+            case 3:
+                setAantalProc(2);
+
+                for(int i=0; i<12; i++){
+                    if(frames[i].getPID() != p.getPid()){
+                        p2 = frames[i].PID;
+                        break;
                     }
+                }
 
-                    for(int i=0;i<6;i++){
-                        int pnr =  getframe(p);
-                        frames[pnr] = p2.getPT()[p2.addPageToRAM()];
+                for(int i=0; i<12; i++){
+                    if(frames[i].getPID() != p.getPid() && frames[i].getPID() != p2){
+                        p3 = frames[i].PID;
+                        break;
                     }
+                }
+                if(p2 == -1 || p3 == -1){
+                    throw new RuntimeException("Tried to remove a process from RAM that wasn't there");
+                }
 
-                    break;
+                for(int i=0;i<2;i++){
+                    int fnr =  getframe(p);
+                    int pnr = Plist[p2].findPageNotInRAM();
+                    addPageToRAM(p2, pnr, fnr);
+                }
 
-                case 3:
-                    setAantalProc(2);
-                    P2ind = 0;
+                for(int i=0;i<2;i++){
+                    int fnr =  getframe(p);
+                    int pnr = Plist[p3].findPageNotInRAM();
+                    addPageToRAM(p3, pnr, fnr);
+                }
+                break;
 
-                    for(int i=0; i<12; i++){
-                        if(frames[i].getPID() != p.getPid()){
-                            p2 = Plist[i];
-                            P2ind = i;
-                            break;
-                        }
+            case 4:
+                setAantalProc(3);
+
+                for(int i=0; i<12; i++){
+                    if(frames[i].getPID() != p.getPid()){
+                        p2 = frames[i].PID;
+                        break;
                     }
+                }
 
-                    for(int i=0; i<12; i++){
-                        if(frames[i].getPID() != p.getPid() && i != P2ind){
-                            p3 = Plist[i];
-                            break;
-                        }
+                for(int i=0; i<12; i++){
+                    if(frames[i].getPID() != p.getPid() && frames[i].getPID() != p2){
+                        p3 = frames[i].PID;
+                        break;
                     }
+                }
 
-                    for(int i=0;i<2;i++){
-                        int pnr =  getframe(p);
-                        frames[pnr] = p2.getPT()[p2.addPageToRAM()];
+                for(int i=0; i<12; i++){
+                    if(frames[i].getPID() != p.getPid() && frames[i].getPID() != p2 && frames[i].getPID() != p3){
+                        p4 = frames[i].PID;
+                        break;
                     }
+                }
+                if(p2 == -1 || p3 == -1 || p4 ==-1){
+                    throw new RuntimeException("Tried to remove a process from RAM that wasn't there");
+                }
 
-                    for(int i=0;i<2;i++){
-                        int pnr =  getframe(p);
-                        frames[pnr] = p3.getPT()[p3.addPageToRAM()];
-                    }
-                    break;
+                addPageToRAM(p3, Plist[p2].findPageNotInRAM(), getframe(p));
+                addPageToRAM(p3, Plist[p3].findPageNotInRAM(), getframe(p));
+                addPageToRAM(p4, Plist[p4].findPageNotInRAM(), getframe(p));
 
-                case 4:
-                    setAantalProc(3);
+                break;
 
-                    P2ind = 0;
-                    P3ind = 0;
-
-                    for(int i=0; i<12; i++){
-                        if(frames[i].getPID() != p.getPid()){
-                            p2 = Plist[i];
-                            P2ind = i;
-                            break;
-                        }
-                    }
-
-                    for(int i=0; i<12; i++){
-                        if(frames[i].getPID() != p.getPid() && i != P2ind){
-                            p3 = Plist[i];
-                            P3ind = i;
-                            break;
-                        }
-                    }
-
-                    for(int i=0; i<12; i++){
-                        if(frames[i].getPID() != p.getPid() && i != P2ind && i != P3ind){
-                            p4 = Plist[i];
-                            break;
-                        }
-                    }
-
-                    frames[getframe(p)] = p2.getPT()[p2.addPageToRAM()];
-                    frames[getframe(p)] = p3.getPT()[p3.addPageToRAM()];
-                    frames[getframe(p)] = p4.getPT()[p4.addPageToRAM()];
-
-                    break;
-
-                default:
-                    throw new RuntimeException("Amount of processes in RAM is negative. This should not be possible.");
-            }
+            default:
+                throw new RuntimeException("Amount of processes in RAM is negative. This should not be possible.");
         }
     }
 
@@ -244,18 +237,24 @@ public class RAM {
         int LRU_index = -1;
         for (Page pg : p.getFramesInRam()) {
             if(pg.LAT < LRU_time){
-                if(getFrameIndex(pg) != -1){
+                int temp = getFrameIndex(pg);
+                if(temp != -1){
                     LRU_time = pg.LAT;
                     LRU_index = getFrameIndex(pg);
                 }
             }
         }
+
+        if(LRU_index == -1){
+            throw new RuntimeException("No frame seems to be available for this process");
+        }
+
         if(frames[LRU_index].MB == 1){
-            Plist[frames[LRU_index].PID].setPage(frames[LRU_index].pageNr, frames[LRU_index]);
+            writeFromRam(frames[LRU_index].PID, frames[LRU_index].pageNr, frames[LRU_index].frameNumber);
         }
         frames[LRU_index].PB = 0;
         p.removePageFromRAM(frames[LRU_index].pageNr);
-        frames[LRU_index].frameNumber = -1;
+        // frames[LRU_index].frameNumber = -1;
 
         //return the number of the allocated frame
         return LRU_index;
@@ -278,11 +277,37 @@ public class RAM {
         return procs;
     }
 
-    public static void writeToRam(int pid, int pnr, int fnr){
+    public static void writeOverRam(int pid, int pnr, int fnr){
         if(frames[fnr].MB == 1){
-            Plist[pid].setPage(pnr, frames[fnr]);
+            writeFromRam(pid, pnr, fnr);
         }
+        Plist[pid].addPageToRAM(pnr, fnr);
+        frames[fnr] = Plist[pid].getPage(pnr);
         frames[fnr].MB = 1;
         writeCounter += 1;
+    }
+
+    public static void writeToRam(int pid, int pnr, int fnr){
+        Plist[pid].addPageToRAM(pnr, fnr);
+        frames[fnr] = Plist[pid].getPage(pnr);
+        frames[fnr].MB = 1;
+        writeCounter += 1;
+    }
+
+    public static void writeFromRam(int pid, int pnr, int fnr){
+        frames[fnr].LAT = time;
+        frames[fnr].MB = 0;
+        Plist[pid].setPage(pnr, frames[fnr]);
+        writeCounter += 1;
+    }
+
+    public void addPageToRAM(int pid, int pnr, int fnr){
+        Plist[pid].addPageToRAM(pnr, fnr);
+        frames[fnr] = Plist[pid].getPage(pnr);
+        writeCounter += 1;
+    }
+
+    public static void setFrameTime(int fnr){
+        frames[fnr].LAT = time;
     }
 }
