@@ -98,7 +98,11 @@ public class PSMApplication extends Application {
     }
 
     public static void terminateProcess(int pid){
-        Ram.removeFromRAM(Plist[pid]);
+        if(RAM.getActiveProcs().contains(pid)){
+            Ram.removeFromRAM(Plist[pid]);
+        } else {
+            throw new RuntimeException("Terminating a process that isn't in RAM?");
+        }
     }
 
     public static void readProcess(int add, int pid){
@@ -128,18 +132,24 @@ public class PSMApplication extends Application {
         switch(num){
             case 1:
                 index = 0;
+                time = 0;
+                writeCounter = 0;
                 active = pro_30_3;
                 activeName = "Instructions_30_3";
                 break;
 
             case 2:
                 index = 0;
+                time = 0;
+                writeCounter = 0;
                 active = pro_20000_4;
                 activeName = "Instructions_20000_4";
                 break;
 
             case 3:
                 index = 0;
+                time = 0;
+                writeCounter = 0;
                 active = pro_20000_20;
                 activeName = "Instructions_20000_20";
                 break;

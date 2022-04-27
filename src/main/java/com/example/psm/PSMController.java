@@ -15,6 +15,8 @@ import static com.example.psm.PSMApplication.*;
 import static com.example.psm.RAM.frames;
 
 public class PSMController implements Initializable {
+    boolean done = false;
+
     @FXML
     private TableView<PageModel> tbData;
 
@@ -46,7 +48,7 @@ public class PSMController implements Initializable {
     public TableColumn<PageModel, Integer> PID;
 
     @FXML
-    private Label l1, l2, timerText, timer, instruct, pid, prevAdd, nextAdd;
+    private Label l1, l2, timerText, timer, instruct, pid, prevAdd, nextAdd, writeCount;
 
     @FXML
     public void setLabelsInit(ArrayList<Instructie> active) {
@@ -58,6 +60,7 @@ public class PSMController implements Initializable {
         pid.setText("ID: " + active.get(0).pid);
         prevAdd.setText("PrevADD: " + active.get(0).add);
         nextAdd.setText("PrevADD: " + active.get(0).add);
+        writeCount.setText("-");
     }
     @FXML
     private Button buttonSingle, buttonAll;
@@ -66,22 +69,33 @@ public class PSMController implements Initializable {
     @FXML
     public void oneProcess() {
         // TODO acties die gepaard gaan met 1 proces uitvoeren hier implementeren
-        terminal = "1 proces werd uitgevoerd";
-        executeAction();
-        updateView();
-        if(index==active.size()-1) index = 0;
-        else index = index+1;
+        if(!done){
+            terminal = "1 proces werd uitgevoerd";
+            executeAction();
+            updateView();
+            if(index==active.size()-1){
+                done = true;
+                terminal = "Change file to continue.";
+                updateView();
+                throw new RuntimeException("End of file reached, try changing files.");
+            } else index = index+1;
+        }
     }
     public void allProcess() {
         // TODO acties die gepaard gaan met alles uitvoeren hier implementeren
         terminal = "Alle processen worden uitgevoerd";
-        while (index < active.size()-1) {
-            executeAction();
+        if(!done){
+            while (index < active.size()-1) {
+                executeAction();
+                updateView();
+                index = index+1;
+            }
+            done = true;
+            terminal = "Change file to continue.";
             updateView();
-            index = index+1;
+        } else {
+            throw new RuntimeException("End of file reached, try changing files.");
         }
-        terminal = "Done";
-        updateView();
     }
 
     @FXML
@@ -89,13 +103,22 @@ public class PSMController implements Initializable {
     private MenuItem file1, file2, file3;
 
     public void actionFile1(){
+        done = false;
+        Ram = new RAM();
         setActive(1);
+        updateView();
     }
     public void actionFile2(){
+        done = false;
+        Ram = new RAM();
         setActive(2);
+        updateView();
     }
     public void actionFile3(){
+        done = false;
+        Ram = new RAM();
         setActive(3);
+        updateView();
     }
 
     public void updateView(){
@@ -107,6 +130,7 @@ public class PSMController implements Initializable {
         pid.setText("ID: " + getActive().pid);
         prevAdd.setText("PrevADD: " + getActive().add);
         nextAdd.setText("NextADD: " + getNextAddress());
+        writeCount.setText(""+writeCounter);
         Page[] PT = Plist[getActive().pid].getPT();
         PageModels = FXCollections.observableArrayList(
                 new PageModel(PT[0].PB, PT[0].MB, PT[0].LAT, PT[0].frameNumber),

@@ -265,7 +265,7 @@ public class RAM {
         return getIndex;
     }
 
-    public ArrayList<Integer> getActiveProcs(){
+    public static ArrayList<Integer> getActiveProcs(){
         ArrayList<Integer> procs = new ArrayList<>();
         if(aantalProc != 0){
             for(int i=0; i<12; i++){

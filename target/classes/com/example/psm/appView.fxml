@@ -69,11 +69,11 @@
           <children>
                   <Button id="buttonSingle" fx:id="buttonSingle" layoutY="19.0" mnemonicParsing="false" onAction="#oneProcess" prefHeight="38.0" prefWidth="106.0" text="Single" />
                   <Button id="buttonAll" fx:id="buttonAll" layoutX="118.0" layoutY="19.0" mnemonicParsing="false" onAction="#allProcess" prefHeight="38.0" prefWidth="106.0" text="All" />
-                  <Pane layoutX="-1.0" layoutY="86.0">
+                  <Pane layoutX="-1.0" layoutY="86.0" prefHeight="190.0" prefWidth="224.0">
                      <children>
                         <Label id="l1" fx:id="l1" alignment="CENTER" layoutX="1.0" prefHeight="38.0" prefWidth="224.0" style="-fx-border-color: black;" text="Label" />
                         <Label id="l1" fx:id="l2" alignment="CENTER" layoutX="1.0" layoutY="38.0" prefHeight="38.0" prefWidth="224.0" style="-fx-border-color: black;" text="Label" />
-                        <TilePane layoutX="1.0" layoutY="76.0" prefColumns="2">
+                        <TilePane layoutX="1.0" layoutY="76.0" prefColumns="2" prefHeight="114.0" prefWidth="224.0">
                            <children>
                               <Label id="l1" fx:id="timerText" alignment="CENTER" prefHeight="38.0" prefWidth="112.0" style="-fx-border-color: black;" text="Label" />
                               <Label id="l1" fx:id="timer" alignment="CENTER" prefHeight="38.0" prefWidth="112.0" style="-fx-border-color: black;" text="Label" />
@@ -104,7 +104,7 @@
                               <TableColumn id="PB" fx:id="PB1" prefWidth="37.0" text="PB" />
                               <TableColumn id="MB" fx:id="MB1" minWidth="7.0" prefWidth="41.0" text="MB" />
                               <TableColumn id="LAT" fx:id="LAT1" editable="false" prefWidth="98.0" text="Last acces time" />
-                              <TableColumn id="frameNumber" fx:id="PID" prefWidth="49.0" text="PID" />
+                              <TableColumn id="PID" fx:id="PID" prefWidth="49.0" text="PID" />
                            </columns>
                         </TableView>
                         <Label alignment="CENTER" layoutX="2.0" prefHeight="25.0" prefWidth="328.0" text="Active Process Page Table" />
@@ -117,7 +117,7 @@
     </SplitPane>
     <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
       <children>
-        <Label maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="Left status" HBox.hgrow="ALWAYS">
+        <Label fx:id="writeCount" maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="0" HBox.hgrow="ALWAYS">
           <font>
             <Font size="11.0" fx:id="x3" />
           </font>
@@ -125,7 +125,10 @@
             <Color red="0.625" green="0.625" blue="0.625" fx:id="x4" />
           </textFill>
         </Label>
-        <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
+        <Pane HBox.hgrow="ALWAYS">
+               <children>
+                  <Label prefHeight="17.0" prefWidth="152.0" text="Writes" />
+               </children></Pane>
         <Label font="$x3" maxWidth="-1.0" text="Right status" textFill="$x4" HBox.hgrow="NEVER" />
       </children>
       <padding>
