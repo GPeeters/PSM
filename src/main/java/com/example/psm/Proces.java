@@ -25,20 +25,8 @@ public class Proces {
         return pid;
     }
 
-    public void setPid(int pid) {
-        this.pid = pid;
-    }
-
-    public int getVirtAdd() {
-        return pid*4096;
-    }
-
     public Page[] getPT() {
         return PT;
-    }
-
-    public void setPT(Page[] PT) {
-        this.PT = PT;
     }
 
     public void addPageToRAM(int pnr, int fnr){
@@ -92,18 +80,6 @@ public class Proces {
         }
     }
 
-    public void setPagePBZero(int nr) {
-        if(0 <= nr && nr < 16){
-            PT[nr].setPB(0);
-        } else {
-            throw new RuntimeException("Page number out of bounds [0, 15]");
-        }
-    }
-
-    public void setFrameNumber(int pageNr, int frameNumber) {
-        PT[pageNr].setFrameNumber(frameNumber);
-    }
-
     public ArrayList<Page> getFramesInRam(){
         ArrayList<Page> FIR = new ArrayList<>();
         for(int i=0;i<16;i++){
@@ -124,17 +100,6 @@ public class Proces {
             RAM.writeToRam(pid, pnr, getframe(this));
         }
 
-    }
-    public void setMB(int pnr, int b) {
-        PT[pnr].MB = b;
-    }
-
-    public void setPagePB(int pnr, int pb) {
-        PT[pnr].PB = pb;
-    }
-
-    public void setPageFrameNumber(int pnr, int fn) {
-        PT[pnr].frameNumber = fn;
     }
 
     public void setPageTime(int pnr) {

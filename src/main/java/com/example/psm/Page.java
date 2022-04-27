@@ -29,32 +29,8 @@ public class Page{
         this.PID = pid;
     }
 
-    public int getPB() {
-        return PB;
-    }
-
     public void setPB(int PB) {
         this.PB = PB;
-    }
-
-    public int getMB() {
-        return MB;
-    }
-
-    public void setMB(int MB) {
-        this.MB = MB;
-    }
-
-    public int getLAT() {
-        return LAT;
-    }
-
-    public void setLAT(int LAT) {
-        this.LAT = LAT;
-    }
-
-    public int getFrameNumber() {
-        return frameNumber;
     }
 
     public void setFrameNumber(int frameNumber) {
@@ -65,15 +41,8 @@ public class Page{
         return pageNr;
     }
 
-    public void setPageNr(int pageNr) {
-        this.pageNr = pageNr;
-    }
-
     public int getPID() {
         return PID;
     }
 
-    public void setPID(int PID) {
-        this.PID = PID;
-    }
 }

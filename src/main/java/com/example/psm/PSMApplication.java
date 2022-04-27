@@ -24,7 +24,6 @@ public class PSMApplication extends Application {
 
     public static Proces[] Plist;
     public static RAM Ram = new RAM();
-    // static HardDrive hd = new HardDrive();
 
     static int index;
     static int time;
@@ -193,7 +192,7 @@ public class PSMApplication extends Application {
     public static void reset(){
         Ram = new RAM();
         for(int j=0;j<12;j++){
-            Ram.frames[j] = new Page(0, 0, 0, 0, -1);
+            RAM.frames[j] = new Page(0, 0, 0, 0, -1);
         }
         Plist = new Proces[20];
         for(int j=0;j<20;j++){
