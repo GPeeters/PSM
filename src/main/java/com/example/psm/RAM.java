@@ -205,7 +205,7 @@ public class RAM {
                     throw new RuntimeException("Tried to remove a process from RAM that wasn't there");
                 }
 
-                addPageToRAM(p3, Plist[p2].findPageNotInRAM(), getframe(p));
+                addPageToRAM(p2, Plist[p2].findPageNotInRAM(), getframe(p));
                 addPageToRAM(p3, Plist[p3].findPageNotInRAM(), getframe(p));
                 addPageToRAM(p4, Plist[p4].findPageNotInRAM(), getframe(p));
 
