@@ -48,7 +48,7 @@ public class PSMController implements Initializable {
     public TableColumn<PageModel, Integer> PID;
 
     @FXML
-    private Label l1, l2, timerText, timer, instruct, pid, prevAdd, nextAdd, writeCount, writesFromRAM;
+    private Label l1, l2, timerText, timer, instruct, pid, prevAdd, nextAdd, writeCount, writesFromRAM, physAdd;
 
     @FXML
     public void setLabelsInit(ArrayList<Instructie> active) {
@@ -62,6 +62,7 @@ public class PSMController implements Initializable {
         nextAdd.setText("PrevADD: " + active.get(0).add);
         writeCount.setText("-");
         writesFromRAM.setText("-");
+        physAdd.setText("Reële adres: ");
     }
     @FXML
     private Button buttonSingle, buttonAll;
@@ -136,6 +137,7 @@ public class PSMController implements Initializable {
         nextAdd.setText("NextADD: " + getNextAddress());
         writeCount.setText(""+writeCounter);
         writesFromRAM.setText(""+writeCounter);
+        physAdd.setText("Reële adres: " + realAdd(getActive().add, getActive().pid));
         Page[] PT = Plist[getActive().pid].getPT();
         PageModels = FXCollections.observableArrayList(
                 new PageModel(PT[0].PB, PT[0].MB, PT[0].LAT, PT[0].frameNumber),
@@ -173,6 +175,12 @@ public class PSMController implements Initializable {
         );
 
         tbData1.setItems(FrameModels);
+    }
+
+    private int realAdd(int add, int pid) {
+        int realAdd = 0;
+
+        return realAdd;
     }
 
     // add your data here from any source
@@ -221,6 +229,7 @@ public class PSMController implements Initializable {
         pid.setText("ID: " + 0);
         prevAdd.setText("PrevADD: " + 0);
         nextAdd.setText("NextADD: " + 0);
+        physAdd.setText("Reële adres: " + 0);
 
         PB.setCellValueFactory(new PropertyValueFactory<>("PB"));
         MB.setCellValueFactory(new PropertyValueFactory<>("MB"));
