@@ -99,18 +99,20 @@
               <children>
                         <TableView fx:id="tbData" layoutY="26.0" prefHeight="525.0" prefWidth="332.0">
                           <columns>
-                            <TableColumn id="PB" fx:id="PB" prefWidth="37.0" text="PB" />
-                            <TableColumn id="MB" fx:id="MB" minWidth="7.0" prefWidth="41.0" text="MB" />
-                              <TableColumn id="LAT" fx:id="LAT" editable="false" prefWidth="98.0" text="Last acces time" />
-                              <TableColumn id="frameNumber" fx:id="frameNumber" prefWidth="92.0" text="Frame Number" />
+                              <TableColumn fx:id="PNR" editable="false" prefWidth="25.0" />
+                            <TableColumn id="PB" fx:id="PB" editable="false" prefWidth="50.0" text="PB" />
+                            <TableColumn id="MB" fx:id="MB" editable="false" minWidth="7.0" prefWidth="43.0" text="MB" />
+                              <TableColumn id="LAT" fx:id="LAT" editable="false" prefWidth="104.0" text="Last acces time" />
+                              <TableColumn id="frameNumber" fx:id="frameNumber" editable="false" prefWidth="109.0" text="Frame Number" />
                           </columns>
                         </TableView>
                         <TableView fx:id="tbData1" layoutX="332.0" layoutY="26.0" prefHeight="525.0" prefWidth="337.0">
                            <columns>
-                              <TableColumn id="PB" fx:id="PB1" prefWidth="37.0" text="PB" />
-                              <TableColumn id="MB" fx:id="MB1" minWidth="7.0" prefWidth="41.0" text="MB" />
+                              <TableColumn fx:id="FNR" editable="false" prefWidth="26.0" />
+                              <TableColumn id="PB" fx:id="PB1" editable="false" prefWidth="47.0" text="PB" />
+                              <TableColumn id="MB" fx:id="MB1" editable="false" minWidth="7.0" prefWidth="41.0" text="MB" />
                               <TableColumn id="LAT" fx:id="LAT1" editable="false" prefWidth="98.0" text="Last acces time" />
-                              <TableColumn id="PID" fx:id="PID" prefWidth="49.0" text="PID" />
+                              <TableColumn id="PID" fx:id="PID" editable="false" prefWidth="49.0" text="PID" />
                            </columns>
                         </TableView>
                         <Label alignment="CENTER" layoutX="2.0" prefHeight="25.0" prefWidth="328.0" text="Active Process Page Table" />

@@ -2,16 +2,30 @@ package com.example.psm;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class PageModel {
+    private SimpleIntegerProperty ID;
     private SimpleIntegerProperty PB;
     private SimpleIntegerProperty MB;
     private SimpleIntegerProperty LAT;
     private SimpleIntegerProperty frameNumber;
 
-    public PageModel(Integer PB, Integer MB, Integer LAT, Integer frameNumber) {
+    public PageModel(Integer ID, Integer PB, Integer MB, Integer LAT, Integer frameNumber) {
+        this.ID = new SimpleIntegerProperty(ID);
         this.PB = new SimpleIntegerProperty(PB);
         this.MB = new SimpleIntegerProperty(MB);
         this.LAT = new SimpleIntegerProperty(LAT);
         this.frameNumber = new SimpleIntegerProperty(frameNumber);
+    }
+
+    public int getID() {
+        return ID.get();
+    }
+
+    public SimpleIntegerProperty IDProperty() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID.set(ID);
     }
 
     public int getPB() {
