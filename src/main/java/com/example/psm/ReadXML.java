@@ -15,20 +15,6 @@ import java.util.ArrayList;
 
 public class ReadXML {
 
-    private static final String FILENAME1 = "Instructions_30_3.xml";
-    private static final String FILENAME2 = "Instructions_20000_4.xml";
-    private static final String FILENAME3 = "Instructions_20000_20.xml";
-
-//    public static void main(String[] args) {
-//        // First read in all xml files;
-//        ArrayList<Instructie> pro_30_3 = ReadXML(FILENAME1);
-//        ArrayList<Instructie> pro_20000_4 = ReadXML(FILENAME2);
-//        ArrayList<Instructie> pro_20000_20 = ReadXML(FILENAME3);
-//
-//        //-------INIT GUI-------
-//        // new GUI(pro_30_3, pro_20000_4, pro_20000_20);
-//    }
-
     public static ArrayList<Instructie> ReadXML(String FILENAME){
         //-----READ XML FILE-----
 
@@ -69,22 +55,8 @@ public class ReadXML {
                     // add to process list
                     processes.add(new Instructie(Integer.parseInt(id), operation, Integer.parseInt(address)));
 
-                    /*if (operation.equals("Start") || operation.equals("Write")){
-                        System.out.println("" + id +"   "+ operation +"       "+ address);
-                    }
-                    else if (operation.equals("Read")){
-                        System.out.println("" + id +"   "+ operation +"        "+ address);
-                    }
-                    else if (operation.equals("Terminate")){
-                        System.out.println("" + id +"   "+ operation +"   "+ address);
-                    }
-                    else{
-                        System.out.println("Error, operation unknown");
-                    }*/
                 }
-
             }
-
         } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
         }
