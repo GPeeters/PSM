@@ -299,6 +299,7 @@ public class RAM {
         fromRamCounter += 1;
     }
 
+    // dit is slechts een uitbreiding op de eerder gedefinieerde functie addPageToRAM
     public void addPageToRAM(int pid, int pnr, int fnr){
         Plist[pid].addPageToRAM(pnr, fnr);
         frames[fnr] = Plist[pid].getPage(pnr);

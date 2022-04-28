@@ -116,6 +116,7 @@ public class PSMApplication extends Application {
         }
 
         if(pagesInRam.contains(PNR)){
+            // aangezien het adres zich reeds in RAM bevindt moeten we enkel te LAT aanpassen
             RAM.setFrameTime(Plist[pid].getPage(PNR).frameNumber);
         } else {
             switchPageToRAM(PNR, pid);
