@@ -56,7 +56,7 @@ public class PSMController implements Initializable {
         l2.setText(" ");
         timerText.setText("TIMER: ");
         timer.setText("0");
-        instruct.setText("Instruction: " + active.get(0).op);
+        instruct.setText("Instr: " + active.get(0).op);
         pid.setText("ID: " + active.get(0).pid);
         prevAdd.setText("PrevADD: " + active.get(0).add);
         nextAdd.setText("PrevADD: " + active.get(0).add);
@@ -132,7 +132,7 @@ public class PSMController implements Initializable {
         l2.setText(getTerminal());
         // timerText.setText("TIMER: ");
         timer.setText(""+getTime());
-        instruct.setText("Instruction: " + getActive().op);
+        instruct.setText("Instr: " + getActive().op);
         pid.setText("ID: " + getActive().pid);
         prevAdd.setText("PrevADD: " + getActive().add);
         nextAdd.setText("NextADD: " + getNextAddress());
@@ -227,11 +227,11 @@ public class PSMController implements Initializable {
         l2.setText("Click a button to start");
         timerText.setText("TIMER: ");
         timer.setText("0");
-        instruct.setText("Instruction: " + "Start");
-        pid.setText("ID: " + 0);
-        prevAdd.setText("PrevADD: " + 0);
-        nextAdd.setText("NextADD: " + 0);
-        physAdd.setText("Real address: " + 0);
+        instruct.setText("Instr: " + "-");
+        pid.setText("ID: " + "-");
+        prevAdd.setText("PrevADD: " + "-");
+        nextAdd.setText("NextADD: " + "-");
+        physAdd.setText("Real address: " + "-");
         writesFromRAM.setText("Writes From RAM: " + 0);
         writesToRAM.setText("Writes To RAM: " + 0);
 

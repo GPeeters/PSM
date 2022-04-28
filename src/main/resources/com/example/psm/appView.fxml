@@ -135,7 +135,6 @@
                <children>
                   <Label prefHeight="17.0" prefWidth="152.0" text="Writes" />
                </children></Pane>
-        <Label fx:id="none" font="$x3" maxWidth="-1.0" text="none" textFill="$x4" HBox.hgrow="NEVER" />
       </children>
       <padding>
         <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
