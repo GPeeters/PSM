@@ -184,14 +184,13 @@ public class PSMController implements Initializable {
         int rest = add%4096;
         int pageNr = add/4096;
         int realFrameNr;
-
-        //klopt enkel als de index gelijk is aan pid.
+        
         Page[] PT = Plist[pid].getPT();
         if(Plist[pid].pid == pid){
             realFrameNr = PT[pageNr].getFrameNr();
             realAdd = realFrameNr*4096 + rest;
         }
-        
+
         return realAdd;
     }
 
