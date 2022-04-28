@@ -79,7 +79,7 @@ public class PSMController implements Initializable {
                 updateView();
                 // throw new RuntimeException("End of file reached, try changing files.");
             }
-            terminal = "1 proces werd uitgevoerd";
+            terminal = "1 instruction was executed";
             executeAction();
             updateView();
             index = index+1;
@@ -90,7 +90,7 @@ public class PSMController implements Initializable {
     }
     public void allProcess() {
         // TODO acties die gepaard gaan met alles uitvoeren hier implementeren
-        terminal = "Alle processen worden uitgevoerd";
+        terminal = "All instructions are being executed";
         if(!done){
             while (index < active.size()-1) {
                 executeAction();
