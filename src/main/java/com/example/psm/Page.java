@@ -41,6 +41,10 @@ public class Page{
         return pageNr;
     }
 
+    public int getFrameNr() {
+        return frameNumber;
+    }
+
     public int getPID() {
         return PID;
     }
