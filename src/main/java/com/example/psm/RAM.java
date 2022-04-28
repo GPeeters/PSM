@@ -219,10 +219,8 @@ public class RAM {
 
     public static void switchPageToRAM(int PNR, int pid) {
         int frameNr = getframe(Plist[pid]);
-        // mogelijks werkt dit niet correct
         Plist[pid].addPageToRAM(PNR, frameNr);
         frames[frameNr] = Plist[pid].getPage(PNR);
-        writeCounter += 1;
     }
 
     public int addressToPID(int address){
@@ -285,14 +283,12 @@ public class RAM {
         Plist[pid].addPageToRAM(pnr, fnr);
         frames[fnr] = Plist[pid].getPage(pnr);
         frames[fnr].MB = 1;
-        writeCounter += 1;
     }
 
     public static void writeToRam(int pid, int pnr, int fnr){
         Plist[pid].addPageToRAM(pnr, fnr);
         frames[fnr] = Plist[pid].getPage(pnr);
         frames[fnr].MB = 1;
-        writeCounter += 1;
     }
 
     public static void writeFromRam(int pid, int pnr, int fnr){
@@ -300,12 +296,12 @@ public class RAM {
         frames[fnr].MB = 0;
         Plist[pid].setPage(pnr, frames[fnr]);
         writeCounter += 1;
+        fromRamCounter += 1;
     }
 
     public void addPageToRAM(int pid, int pnr, int fnr){
         Plist[pid].addPageToRAM(pnr, fnr);
         frames[fnr] = Plist[pid].getPage(pnr);
-        writeCounter += 1;
     }
 
     public static void setFrameTime(int fnr){

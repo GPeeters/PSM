@@ -27,7 +27,9 @@ public class PSMApplication extends Application {
 
     static int index;
     static int time;
-    static int writeCounter;
+    static int writeCounter = 0;
+    static int toRamCounter = 0;
+    static int fromRamCounter = 0;
 
     static String activeName = "Instructions_30_3";
     static String terminal;
@@ -130,27 +132,18 @@ public class PSMApplication extends Application {
     public static void setActive(int num){
         switch(num){
             case 1:
-                index = 0;
-                time = 0;
-                writeCounter = 0;
                 active = pro_30_3;
                 activeName = "Instructions_30_3";
                 reset();
                 break;
 
             case 2:
-                index = 0;
-                time = 0;
-                writeCounter = 0;
                 active = pro_20000_4;
                 activeName = "Instructions_20000_4";
                 reset();
                 break;
 
             case 3:
-                index = 0;
-                time = 0;
-                writeCounter = 0;
                 active = pro_20000_20;
                 activeName = "Instructions_20000_20";
                 reset();
@@ -190,6 +183,12 @@ public class PSMApplication extends Application {
     }
 
     public static void reset(){
+        index = 0;
+        time = 0;
+        writeCounter = 0;
+        fromRamCounter = 0;
+        toRamCounter = 0;
+
         Ram = new RAM();
         for(int j=0;j<12;j++){
             RAM.frames[j] = new Page(0, 0, 0, 0, -1);

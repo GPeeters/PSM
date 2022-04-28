@@ -48,7 +48,7 @@ public class PSMController implements Initializable {
     public TableColumn<PageModel, Integer> PID;
 
     @FXML
-    private Label l1, l2, timerText, timer, instruct, pid, prevAdd, nextAdd, writeCount, writesFromRAM, physAdd;
+    private Label l1, l2, timerText, timer, instruct, pid, prevAdd, nextAdd, writeCount, writesFromRAM, writesToRAM, physAdd;
 
     @FXML
     public void setLabelsInit(ArrayList<Instructie> active) {
@@ -62,6 +62,7 @@ public class PSMController implements Initializable {
         nextAdd.setText("PrevADD: " + active.get(0).add);
         writeCount.setText("-");
         writesFromRAM.setText("-");
+        writesToRAM.setText("-");
         physAdd.setText("Reële adres: ");
     }
     @FXML
@@ -136,7 +137,8 @@ public class PSMController implements Initializable {
         prevAdd.setText("PrevADD: " + getActive().add);
         nextAdd.setText("NextADD: " + getNextAddress());
         writeCount.setText(""+writeCounter);
-        writesFromRAM.setText(""+writeCounter);
+        writesFromRAM.setText("W From RAM: "+fromRamCounter);
+        writesToRAM.setText("W To RAM: "+toRamCounter);
         physAdd.setText("Reële adres: " + realAdd(getActive().add, getActive().pid));
         Page[] PT = Plist[getActive().pid].getPT();
         PageModels = FXCollections.observableArrayList(
@@ -230,6 +232,8 @@ public class PSMController implements Initializable {
         prevAdd.setText("PrevADD: " + 0);
         nextAdd.setText("NextADD: " + 0);
         physAdd.setText("Reële adres: " + 0);
+        writesFromRAM.setText("W From RAM: " + 0);
+        writesToRAM.setText("W To RAM: " + 0);
 
         PB.setCellValueFactory(new PropertyValueFactory<>("PB"));
         MB.setCellValueFactory(new PropertyValueFactory<>("MB"));

@@ -2,8 +2,7 @@ package com.example.psm;
 
 import java.util.ArrayList;
 
-import static com.example.psm.PSMApplication.time;
-import static com.example.psm.PSMApplication.writeCounter;
+import static com.example.psm.PSMApplication.*;
 import static com.example.psm.RAM.getframe;
 import static com.example.psm.RAM.writeFromRam;
 
@@ -33,6 +32,8 @@ public class Proces {
         PT[pnr].PB = 1;
         PT[pnr].frameNumber = fnr;
         PT[pnr].LAT = time;
+        writeCounter += 1;
+        toRamCounter += 1;
     }
 
     // finds the first page that is not in the RAM yet
@@ -75,6 +76,7 @@ public class Proces {
             PT[nr] = pg;
             PT[nr].frameNumber = -1;
             writeCounter += 1;
+            PSMApplication.toRamCounter += 1;
         } else {
             throw new RuntimeException("Page number out of bounds [0, 15]");
         }
