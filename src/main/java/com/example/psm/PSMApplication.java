@@ -63,7 +63,7 @@ public class PSMApplication extends Application {
             Plist[j] = new Proces(j);
         }
 
-        terminal = "Press a button to begin";
+        terminal = "Click a button to start";
 
         launch();
     }

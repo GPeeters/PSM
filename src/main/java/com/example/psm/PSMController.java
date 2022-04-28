@@ -56,14 +56,14 @@ public class PSMController implements Initializable {
         l2.setText(" ");
         timerText.setText("TIMER: ");
         timer.setText("0");
-        instruct.setText("Instructie: " + active.get(0).op);
+        instruct.setText("Instruction: " + active.get(0).op);
         pid.setText("ID: " + active.get(0).pid);
         prevAdd.setText("PrevADD: " + active.get(0).add);
         nextAdd.setText("PrevADD: " + active.get(0).add);
         writeCount.setText("-");
         writesFromRAM.setText("-");
         writesToRAM.setText("-");
-        physAdd.setText("Reële adres: ");
+        physAdd.setText("Real address: ");
     }
     @FXML
     private Button buttonSingle, buttonAll;
@@ -132,14 +132,14 @@ public class PSMController implements Initializable {
         l2.setText(getTerminal());
         // timerText.setText("TIMER: ");
         timer.setText(""+getTime());
-        instruct.setText("Instructie: " + getActive().op);
+        instruct.setText("Instruction: " + getActive().op);
         pid.setText("ID: " + getActive().pid);
         prevAdd.setText("PrevADD: " + getActive().add);
         nextAdd.setText("NextADD: " + getNextAddress());
         writeCount.setText(""+writeCounter);
-        writesFromRAM.setText("W From RAM: "+fromRamCounter);
-        writesToRAM.setText("W To RAM: "+toRamCounter);
-        physAdd.setText("Reële adres: " + realAdd(getActive().add, getActive().pid));
+        writesFromRAM.setText("Writes From RAM: "+fromRamCounter);
+        writesToRAM.setText("Writes To RAM: "+toRamCounter);
+        physAdd.setText("Real address: " + realAdd(getActive().add, getActive().pid));
         Page[] PT = Plist[getActive().pid].getPT();
         PageModels = FXCollections.observableArrayList(
                 new PageModel(PT[0].PB, PT[0].MB, PT[0].LAT, PT[0].frameNumber),
@@ -227,13 +227,13 @@ public class PSMController implements Initializable {
         l2.setText("Click a button to start");
         timerText.setText("TIMER: ");
         timer.setText("0");
-        instruct.setText("Instructie: " + "Start");
+        instruct.setText("Instruction: " + "Start");
         pid.setText("ID: " + 0);
         prevAdd.setText("PrevADD: " + 0);
         nextAdd.setText("NextADD: " + 0);
-        physAdd.setText("Reële adres: " + 0);
-        writesFromRAM.setText("W From RAM: " + 0);
-        writesToRAM.setText("W To RAM: " + 0);
+        physAdd.setText("Real address: " + 0);
+        writesFromRAM.setText("Writes From RAM: " + 0);
+        writesToRAM.setText("Writes To RAM: " + 0);
 
         PB.setCellValueFactory(new PropertyValueFactory<>("PB"));
         MB.setCellValueFactory(new PropertyValueFactory<>("MB"));
